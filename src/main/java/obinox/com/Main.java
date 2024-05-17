@@ -21,28 +21,28 @@ public class Main {
 
         System.out.println(tiles);
 
-        StringBuilder wallCode = new StringBuilder();
+        StringBuilder yamaCode = new StringBuilder();
         for (Tile t: tiles){
-            wallCode.append(t.str);
+            yamaCode.append(t.str);
         }
-        System.out.println(wallCode);
+        System.out.println(yamaCode);
 
-        List<Tile> rinshanTiles;
-        List<Tile> doraIndicators;
-        List<Tile> uradoraIndicators;
-        List<Tile> doraTiles;
-        List<Tile> liveWall;
+        List<Tile> rinshanhai;
+        List<Tile> dorahyoujihai;
+        List<Tile> uradorahyoujihai;
+        List<Tile> dorapai;
+        List<Tile> haiyama;
 
-        rinshanTiles = tiles.subList(0,4);
-        doraIndicators = tiles.subList(4,9);
-        uradoraIndicators = tiles.subList(9,14);
-        doraTiles = new ArrayList<>(Tile.getDora(doraIndicators.get(0)));
-        liveWall = tiles.subList(14,136);
+        rinshanhai = tiles.subList(0,4);
+        dorahyoujihai = tiles.subList(4,9);
+        uradorahyoujihai = tiles.subList(9,14);
+        dorapai = new ArrayList<>(Tile.getDora(dorahyoujihai.get(0)));
+        haiyama = tiles.subList(14,136);
 
-        System.out.println(rinshanTiles);
-        System.out.println(doraIndicators);
-        System.out.println(doraTiles);
-        System.out.println(liveWall);
+        System.out.println(rinshanhai);
+        System.out.println(dorahyoujihai);
+        System.out.println(dorapai);
+        System.out.println(haiyama);
 
         //hand Tile[13] + tsumo
 
