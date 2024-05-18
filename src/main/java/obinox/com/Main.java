@@ -42,6 +42,7 @@ public class Main {
 
         // Oya tsumo
         int turn = 0;
+
         // Start game
         while (!yama.isYamaEnd()){
             try {
