@@ -4,8 +4,8 @@ public enum Group{
     MAN(9),
     PIN(9),
     SOU(9),
-    KAZEHAI(4),
-    SANGENPAI(3),
+    KAZE(4),
+    SANGEN(3),
 
     ;
 

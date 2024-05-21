@@ -13,6 +13,20 @@ public class Main {
     public final int honba = 0;
     public final int jun = 1;
     public static void main(String[] args) {
+
+        Mentsu.mentsu m1 = Mentsu.tiles(new Tile[]{Tile.PIN8, Tile.PIN8, Tile.PIN8});
+        System.out.println(m1);
+        System.out.println(m1.getClass());
+
+
+        Mentsu.mentsu m2 = Mentsu.tiles(new Tile[]{Tile.PIN7, Tile.PIN8, Tile.PIN9});
+        System.out.println(m2);
+        System.out.println(m2.getClass());
+
+        Mentsu.mentsu m3 = Mentsu.tiles(new Tile[]{Tile.EAST, Tile.SOUTH, Tile.WEST});
+        System.out.println(m3);
+        System.out.println(m3.getClass());
+
         Scanner scn = new Scanner(System.in);
 
         //East-ba 1-kyoku 0-honba
@@ -38,13 +52,13 @@ public class Main {
         } catch (MahjongException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println(yama.haiyama);
+        System.out.println(yama.HAIYAMA);
 
         // Oya tsumo
         int turn = 0;
 
         // Start game
-        while (!yama.isYamaEnd()){
+        while (true||!yama.isYamaEnd()){
             try {
                 hands[turn].tsumo(yama.tsumo());
                 hands[turn].suteru(0);

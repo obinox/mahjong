@@ -83,7 +83,7 @@ public enum Yaku {
      * @see Yaku#IPP
      * @see Yaku#URA
      */
-    RCH,
+    RCH(1, 0),
 
     /**
      * <h1>Daburu Riichi/Double Riichi(<i>DRI</i>)</h1>
@@ -100,7 +100,7 @@ public enum Yaku {
      * @see Yaku#TEN
      * @see Yaku#CHH
      */
-    DRI,
+    DRI(2, 0),
 
     /**
      * <h1>Ippatsu(<i>IPP</i>)</h1>
@@ -117,7 +117,7 @@ public enum Yaku {
      * @see Yaku#DRI
      * @see Yaku#CHK
      */
-    IPP,
+    IPP(1, 0),
 
     /**
      * <h1>Menzenchin Tsumohou/Menzen Tsumo(<i>SMO</i>)</h1>
@@ -131,7 +131,7 @@ public enum Yaku {
      *
      * @see Yaku#RCH
      */
-    SMO,
+    SMO(1, 0),
 
     /**
      * <h1>Tanyao(<i>TAN</i>)</h1>
@@ -152,7 +152,7 @@ public enum Yaku {
      * @see Yaku#TAN
      * @see Yaku#PFU
      */
-    TAN,
+    TAN(1, 1),
 
     /**
      * <h1>Pinfu(<i>PFU</i>)</h1>
@@ -170,7 +170,7 @@ public enum Yaku {
      * @see Yaku#TAN
      * @see Yaku#PFU
      */
-    PFU,
+    PFU(1, 0),
 
     /**
      * <h1>Iipeikou(<i>IPK</i>)</h1>
@@ -184,7 +184,7 @@ public enum Yaku {
      *
      * @see Yaku#RPK
      */
-    IPK,
+    IPK(1, 0),
 
     /**
      * <h1>Ikitsuukan/ittsuu(<i>ITT</i>)</h1>
@@ -202,7 +202,7 @@ public enum Yaku {
      * @see Yaku#HON
      * @see Yaku#CHN
      */
-    ITT,
+    ITT(2, 1),
 
     /**
      * <h1>Yakuhai/Fanpai(<i>YAK</i>)</h1>
@@ -210,14 +210,87 @@ public enum Yaku {
      * <p>1 han per count</p>
      * <h2>Requirements</h2>
      * <ul>
-     *     <li>{@link Rule#Tiles Sangenpai}/{@link Rule#Tiles Bakaze}/{@link Rule#Tiles Jikaze} {@link Rule#Mentsu koutsu}</li>
+     *     <li>{@link Group#SANGEN Sangenpai}/{@link Yaku#YAKB Bakaze}/{@link Yaku#YAKJ Jikaze} {@link Rule#Mentsu koutsu}</li>
      *     <li>{@link Rule#Tiles Otakaze} {@link Rule#Mentsu koutsu} is not allowed</li>
      * </ul>
      *
-     * @see Group#SANGENPAI
-     * @see Group#KAZEHAI
+     * @see Group#SANGEN
+     * @see Group#KAZE
+     * @see Yaku#YAKB
+     * @see Yaku#YAKJ
+     * @see Yaku#YAKW
+     * @see Yaku#YAKG
+     * @see Yaku#YAKR
      */
-    YAK,
+    YAK(1, 1),
+
+    /**
+     * <h1>Yakuhai: Bakaze(<i>YAKB</i>)</h1>
+     * <h2>Value</h2>
+     * <p>1 han</p>
+     * <h2>Requirements</h2>
+     * <ul>
+     *     <li>Same {@link Group#KAZE kaze} tiles which as current round {@link Rule#Mentsu koutsu}</li>
+     * </ul>
+     *
+     * @see Group#KAZE
+     */
+    YAKB(1, 1),
+
+    /**
+     * <h1>Yakuhai: Jikaze(<i>YAKJ</i>)</h1>
+     * <h2>Value</h2>
+     * <p>1 han</p>
+     * <h2>Requirements</h2>
+     * <ul>
+     *     <li>Same {@link Group#KAZE kaze} tiles which as current player {@link Rule#Mentsu koutsu}</li>
+     * </ul>
+     *
+     * @see Group#KAZE
+     */
+    YAKJ(1, 1),
+
+    /**
+     * <h1>Yakuhai: Haku(<i>YAKW</i>)</h1>
+     * <h2>Value</h2>
+     * <p>1 han</p>
+     * <h2>Requirements</h2>
+     * <ul>
+     *     <li>{@link Tile#WHITE Haku} {@link Rule#Mentsu koutsu}</li>
+     * </ul>
+     *
+     * @see Group#SANGEN
+     * @see Tile#WHITE
+     */
+    YAKW(1, 1),
+
+    /**
+     * <h1>Yakuhai: Hatsu(<i>YAKG</i>)</h1>
+     * <h2>Value</h2>
+     * <p>1 han</p>
+     * <h2>Requirements</h2>
+     * <ul>
+     *     <li>{@link Tile#GREEN Hatsu} {@link Rule#Mentsu koutsu}</li>
+     * </ul>
+     *
+     * @see Group#SANGEN
+     * @see Tile#GREEN
+     */
+    YAKG(1, 1),
+
+    /**
+     * <h1>Yakuhai: Chun(<i>YAKR</i>)</h1>
+     * <h2>Value</h2>
+     * <p>1 han</p>
+     * <h2>Requirements</h2>
+     * <ul>
+     *     <li>{@link Tile#RED Chun} {@link Rule#Mentsu koutsu}</li>
+     * </ul>
+     *
+     * @see Group#SANGEN
+     * @see Tile#RED
+     */
+    YAKR(1, 1),
 
     /**
      * <h1>Sanshoku Doujun/Sanshiki(<i>SDJ</i>)</h1>
@@ -235,7 +308,7 @@ public enum Yaku {
      * @see Group#PIN
      * @see Group#SOU
      */
-    SDJ,
+    SDJ(2, 1),
 
     /**
      * <h1>Sanshoku Doukou(<i>SDO</i>)</h1>
@@ -252,7 +325,7 @@ public enum Yaku {
      * @see Group#PIN
      * @see Group#SOU
      */
-    SDO,
+    SDO(2, 2),
 
     /**
      * <h1>Toitoihou/ToiToi(<i>TOI</i>)</h1>
@@ -266,7 +339,7 @@ public enum Yaku {
      * @see Yaku#SNA
      * @see Yaku#SUA
      */
-    TOI,
+    TOI(2, 2),
 
     /**
      * <h1>Sanankou(<i>SNA</i>)</h1>
@@ -279,7 +352,7 @@ public enum Yaku {
      *
      * @see Yaku#TOI
      */
-    SNA,
+    SNA(2, 2),
 
     /**
      * <h1>Sankantsu(<i>SNK</i>)</h1>
@@ -293,7 +366,7 @@ public enum Yaku {
      * @see Yaku#TOI
      * @see Yaku#SNA
      */
-    SNK,
+    SNK(2, 2),
 
     /**
      * <h1>Chanta/Honchantai Yaochuu(<i>CHA</i>)</h1>
@@ -303,11 +376,12 @@ public enum Yaku {
      * <h2>Requirements</h2>
      * <ul>
      *     <li>All {@link Rule#Mentsu mentsu} and {@link Rule#Mentsu toitsu}/{@link Rule#Mentsu jantou} inclued {@link Rule#Tiles yaochuuhai}</li>
+     *     <li>Not all the tiles are {@link Rule#Tiles yaochuuhai}</li>
      * </ul>
      *
      * @see Yaku#JUN
      */
-    CHA,
+    CHA(2, 1),
 
     /**
      * <h1>Junchan/Junchantai Yaochuu(<i>JUN</i>)</h1>
@@ -317,11 +391,12 @@ public enum Yaku {
      * <h2>Requirements</h2>
      * <ul>
      *     <li>All {@link Rule#Mentsu mentsu} and {@link Rule#Mentsu toitsu}/{@link Rule#Mentsu jantou} inclued {@link Rule#Tiles routouhai}</li>
+     *     <li>Not all the tiles are {@link Rule#Tiles yaochuuhai}</li>
      * </ul>
      *
      * @see Yaku#CHA
      */
-    JUN,
+    JUN(3, 2),
 
     /**
      * <h1>Ryanpeikou(<i>RPK</i>)</h1>
@@ -335,7 +410,7 @@ public enum Yaku {
      *
      * @see Yaku#CHA
      */
-    RPK,
+    RPK(3, 0),
 
     /**
      * <h1>Shousangen(<i>SSG</i>)</h1>
@@ -346,10 +421,10 @@ public enum Yaku {
      *     <li>Two {@link Rule#Mentsu koutsu} and one {@link Rule#Mentsu jantou} with {@link Rule#Tiles Sangenpai}</li>
      * </ul>
      *
-     * @see Group#SANGENPAI
+     * @see Group#SANGEN
      * @see Yaku#DSG
      */
-    SSG,
+    SSG(2, 2),
 
     /**
      * <h1>Honroutou(<i>HRO</i>)</h1>
@@ -363,12 +438,13 @@ public enum Yaku {
      * @see Yaku#CHI
      * @see Yaku#TOI
      */
-    HRO,
+    HRO(2, 2),
 
     /**
      * <h1>Honiisou/Honistu(<i>HON</i>)</h1>
      * <h2>Value</h2>
-     * <p>2 han</p>
+     * <p>{@link Rule#Menzen Menzen}: 3 han</p>
+     * <p>{@link Rule#Fuuro Fuuro}: 2 han</p>
      * <h2>Requirements</h2>
      * <ul>
      *     <li>All tiles are {@link Rule#Tiles jihai} or single suit {@link Rule#Tiles shuupai}</li>
@@ -378,7 +454,7 @@ public enum Yaku {
      * @see Yaku#CHI
      * @see Yaku#TOI
      */
-    HON,
+    HON(3, 2),
 
     /**
      * <h1>Chiniisou/Chinitsu(<i>CHN</i>)</h1>
@@ -392,7 +468,7 @@ public enum Yaku {
      *
      * @see Yaku#CHU
      */
-    CHN,
+    CHN(6, 5),
 
     /**
      * <h1>Chitoitsu/Chitoi(<i>CHI</i>)</h1>
@@ -410,7 +486,7 @@ public enum Yaku {
      * @see Yaku#HAI
      * @see Yaku#HOU
      */
-    CHI,
+    CHI(2, 0),
 
     /**
      * <h1>Rinshan Kaihou(<i>RIN</i>)</h1>
@@ -423,7 +499,7 @@ public enum Yaku {
      *
      * @see Yaku
      */
-    RIN,
+    RIN(1, 1),
 
     /**
      * <h1>Haitei Raoyue(<i>HAI</i>)</h1>
@@ -440,7 +516,7 @@ public enum Yaku {
      *
      * @see Yaku#HOU
      */
-    HAI,
+    HAI(1, 1),
 
     /**
      * <h1>Houtei Raoyui(<i>HOU</i>)</h1>
@@ -457,7 +533,7 @@ public enum Yaku {
      *
      * @see Yaku#HAI
      */
-    HOU,
+    HOU(1, 1),
 
     /**
      * <h1>Chankan(<i>CHK</i>)</h1>
@@ -470,7 +546,7 @@ public enum Yaku {
      *
      * @see Yaku
      */
-    CHK,
+    CHK(1, 1),
 
     /**
      * <h1>Dora/Kandora(<i>DRA</i>)</h1>
@@ -488,7 +564,7 @@ public enum Yaku {
      * @see Yaku#URA
      * @see Yaku#AKA
      */
-    DRA,
+    DRA(1, 1),
 
     /**
      * <h1>Uradora(<i>URA</i>)</h1>
@@ -505,7 +581,7 @@ public enum Yaku {
      * @see Yaku#DRA
      * @see Yaku#AKA
      */
-    URA,
+    URA(1, 1),
 
     /**
      * <h1>Akadora(<i>AKA</i>)</h1>
@@ -520,7 +596,7 @@ public enum Yaku {
      * @see Yaku#URA
      * @see Yaku#AKA
      */
-    AKA,
+    AKA(1, 1),
 
     // Yakuman!
 
@@ -538,7 +614,7 @@ public enum Yaku {
      *
      * @see Yaku#CHK
      */
-    KMU,
+    KMU(13, 13),
 
     /**
      * <h1>Daisangen(<i>DSG</i>)</h1>
@@ -549,10 +625,10 @@ public enum Yaku {
      *     <li>Three {@link Rule#Mentsu koutsu} with {@link Rule#Tiles Sangenpai}</li>
      * </ul>
      *
-     * @see Group#SANGENPAI
+     * @see Group#SANGEN
      * @see Yaku#SSG
      */
-    DSG,
+    DSG(13, 13),
 
     /**
      * <h1>Suuankou(<i>SUA</i>)</h1>
@@ -573,7 +649,7 @@ public enum Yaku {
      * @see Yaku#SNA
      * @see Yaku#SUA1
      */
-    SUA,
+    SUA(13, 0),
 
     /**
      * <h1>Shousuushii/Suushiihou(<i>SSS</i>)</h1>
@@ -585,10 +661,10 @@ public enum Yaku {
      *     <li>One {@link Rule#Mentsu jantou} with last {@link Rule#Tiles Kazehai}</li>
      * </ul>
      *
-     * @see Group#KAZEHAI
+     * @see Group#KAZE
      * @see Yaku#DSS
      */
-    SSS,
+    SSS(13, 13),
 
     /**
      * <h1>Tsuuiisou(<i>TSU</i>)</h1>
@@ -599,10 +675,10 @@ public enum Yaku {
      *     <li>All tiles are {@link Rule#Tiles jihai}</li>
      * </ul>
      *
-     * @see Group#KAZEHAI
+     * @see Group#KAZE
      * @see Yaku#DSS
      */
-    TSU,
+    TSU(13, 13),
 
     /**
      * <h1>Ryuuiisou(<i>RYU</i>)</h1>
@@ -613,10 +689,10 @@ public enum Yaku {
      *     <li>All tiles are {@link Tile#SOU2 2sou}, {@link Tile#SOU3 3sou}, {@link Tile#SOU4 4sou}, {@link Tile#SOU6 6sou}, {@link Tile#SOU8 8sou} and/or {@link Tile#GREEN hatsu}</li>
      * </ul>
      *
-     * @see Group#KAZEHAI
+     * @see Group#KAZE
      * @see Yaku#DSS
      */
-    RYU,
+    RYU(13, 13),
 
     /**
      * <h1>Chinroutou(<i>CHR</i>)</h1>
@@ -629,7 +705,7 @@ public enum Yaku {
      *
      * @see Yaku#HRO
      */
-    CHR,
+    CHR(13, 13),
 
     /**
      * <h1>Chuuren Poutou(<i>CHU</i>)</h1>
@@ -649,7 +725,7 @@ public enum Yaku {
      * @see Yaku#HON
      * @see Yaku#CHU9
      */
-    CHU,
+    CHU(13, 0),
 
     /**
      * <h1>Suukantsu(<i>SUK</i>)</h1>
@@ -664,7 +740,7 @@ public enum Yaku {
      *
      * @see Yaku#SUA
      */
-    SUK,
+    SUK(13, 13),
 
     /**
      * <h1>Tenhou(<i>TEN</i>)</h1>
@@ -678,7 +754,7 @@ public enum Yaku {
      *
      * @see Yaku#DRI
      */
-    TEN,
+    TEN(13, 0),
 
     /**
      * <h1>Chiihou(<i>CHH</i>)</h1>
@@ -693,7 +769,7 @@ public enum Yaku {
      *
      * @see Yaku#DRI
      */
-    CHH,
+    CHH(13, 0),
 
     // Double Yakuman!!
 
@@ -711,7 +787,7 @@ public enum Yaku {
      *
      * @see Yaku#KMU
      */
-    KMU13,
+    KMU13(26, 0),
 
     /**
      * <h1>Suuankou Tanki(<i>SUA1</i>)</h1>
@@ -727,7 +803,7 @@ public enum Yaku {
      *
      * @see Yaku#SUA
      */
-    SUA1,
+    SUA1(26, 0),
 
     /**
      * <h1>Daisuushii/Suushiihou(<i>DSS</i>)</h1>
@@ -738,10 +814,10 @@ public enum Yaku {
      *     <li>Four {@link Rule#Mentsu koutsu} with {@link Rule#Tiles Kazehai}</li>
      * </ul>
      *
-     * @see Group#KAZEHAI
+     * @see Group#KAZE
      * @see Yaku#SSS
      */
-    DSS,
+    DSS(26, 26),
 
     /**
      * <h1>Junsei Chuuren Poutou(<i>CHU9</i>)</h1>
@@ -760,8 +836,14 @@ public enum Yaku {
      * @see Group#SOU
      * @see Yaku#CHU
      */
-    CHU9,
+    CHU9(26, 0),
     ;
-//    public boolean
+    public final int menzen;
+    public final int fuuro;
+
+    Yaku(int m, int f){
+        this.menzen=m;
+        this.fuuro=f;
+    }
 }
 
