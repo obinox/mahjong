@@ -1,5 +1,11 @@
 package obinox.com;
 
+import obinox.com.Enums.MahjongError;
+import obinox.com.Enums.Tile;
+import obinox.com.Mentsu.Mentsu;
+import obinox.com.Mentsu.Taatsu;
+import obinox.com.Mentsu.Toitsu;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,11 +22,11 @@ public class Hand {
     public void setKyoku(Tile[] tiles, int d) throws MahjongException{
         this.direction = d;
         if (tiles.length != 13){
-            throw new MahjongException(MahjongException.MahjongError.HAIPAI_ERROR);
+            throw new MahjongException(MahjongError.HAIPAI_ERROR);
         }
         for (Tile t: tiles){
             if (t==null){
-                throw new MahjongException(MahjongException.MahjongError.HAIPAI_ERROR);
+                throw new MahjongException(MahjongError.HAIPAI_ERROR);
             }
         }
         this.tiles = tiles;
@@ -31,7 +37,7 @@ public class Hand {
 
     public void tsumo(Tile t) throws MahjongException{
         if (this.tsumohai!=null){
-            throw new MahjongException(MahjongException.MahjongError.IS_ALREADY_TSUMO);
+            throw new MahjongException(MahjongError.IS_ALREADY_TSUMO);
         }
         this.tsumohai = t;
         System.out.println("Direction: "+this.direction+", Tsumo:"+this.tsumohai);
@@ -44,7 +50,7 @@ public class Hand {
 
     public Tile suteru(int idx) throws MahjongException{
         if (idx<0||idx>13){
-            throw new MahjongException(MahjongException.MahjongError.HAND_INDEX_OUT_OF_RANGE);
+            throw new MahjongException(MahjongError.HAND_INDEX_OUT_OF_RANGE);
         }
         Tile t;
         if (idx == 13){
@@ -59,13 +65,19 @@ public class Hand {
         return t;
     }
 
-    public void pong(){
-
+    public Mentsu pong(Toitsu toi, Tile tile, int from){
+        Mentsu men = MentsuGen.fuuro(toi, tile, from);
+        naki.add(men);
+        return men;
     }
-    public void chii(){
-
+    public Mentsu chii(Taatsu taa, Tile tile){
+        Mentsu men = MentsuGen.fuuro(taa, tile, (this.direction+3)%4);
+        naki.add(men);
+        return men;
     }
-    public void kan(){
-
+    public Mentsu kan(Toitsu toi, Tile tile, int from){
+        Mentsu men = MentsuGen.fuuro(toi, tile, from);
+        naki.add(men);
+        return men;
     }
 }

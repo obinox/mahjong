@@ -1,4 +1,4 @@
-package obinox.com;
+package obinox.com.Enums;
 
 /**
  * <h1>{@link Yaku} for Mahjong</h1>

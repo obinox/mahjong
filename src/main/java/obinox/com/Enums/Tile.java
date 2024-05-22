@@ -1,4 +1,4 @@
-package obinox.com;
+package obinox.com.Enums;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -63,11 +63,11 @@ public enum Tile {
     public final String str;
     public final int count;
 
-    Tile(int value, Group group, String str, int count){
-        this.value = value;
-        this.group = group;
-        this.str = str;
-        this.count = count;
+    Tile(int v, Group g, String s, int c){
+        this.value = v;
+        this.group = g;
+        this.str = s;
+        this.count = c;
     }
     public final String getStr(){
         return this.str;
@@ -75,6 +75,13 @@ public enum Tile {
 
     public static boolean equal(Tile t1, Tile t2){
         return t1.group == t2.group && t1.value == t2.value;
+    }
+    public static boolean equal(Tile[] ts, Tile ti){
+        boolean b = true;
+        for (Tile t: ts){
+            b = b && ti.group == t.group && ti.value == t.value;
+        }
+        return b;
     }
     public static boolean equal(Tile... ts){
         boolean b = true;
@@ -86,11 +93,20 @@ public enum Tile {
     public static boolean sequence(Tile t1, Tile t2){
         return t1.group == t2.group && t1.value == t2.value+1;
     }
-    public static boolean sequence(Tile... ts){
+    public static boolean sequence(Tile[] ts){
         boolean b = true;
         int d = 0;
         for (Tile t: ts){
             b = b && ts[0].group == t.group && ts[0].value+d == t.value;
+            d++;
+        }
+        return b;
+    }
+    public static boolean sequence(Tile[] ts, int j){
+        boolean b = true;
+        int d = 0;
+        for (Tile t: ts){
+            b = b && ts[0].group == t.group && ts[0].value+d*j == t.value;
             d++;
         }
         return b;

@@ -1,5 +1,8 @@
 package obinox.com;
 
+import obinox.com.Enums.Tile;
+import obinox.com.Mentsu.Mentsu;
+
 import java.util.Scanner;
 
 /**
@@ -14,16 +17,16 @@ public class Main {
     public final int jun = 1;
     public static void main(String[] args) {
 
-        Mentsu.mentsu m1 = Mentsu.tiles(new Tile[]{Tile.PIN8, Tile.PIN8, Tile.PIN8});
+        Mentsu m1 = MentsuGen.mentsu(new Tile[]{Tile.PIN8, Tile.PIN8, Tile.PIN8});
         System.out.println(m1);
         System.out.println(m1.getClass());
 
 
-        Mentsu.mentsu m2 = Mentsu.tiles(new Tile[]{Tile.PIN7, Tile.PIN8, Tile.PIN9});
+        Mentsu m2 = MentsuGen.mentsu(new Tile[]{Tile.PIN7, Tile.PIN8, Tile.PIN9});
         System.out.println(m2);
         System.out.println(m2.getClass());
 
-        Mentsu.mentsu m3 = Mentsu.tiles(new Tile[]{Tile.EAST, Tile.SOUTH, Tile.WEST});
+        Mentsu m3 = MentsuGen.mentsu(new Tile[]{Tile.EAST, Tile.SOUTH, Tile.WEST});
         System.out.println(m3);
         System.out.println(m3.getClass());
 

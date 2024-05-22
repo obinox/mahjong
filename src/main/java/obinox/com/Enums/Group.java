@@ -1,4 +1,4 @@
-package obinox.com;
+package obinox.com.Enums;
 
 public enum Group{
     MAN(9),

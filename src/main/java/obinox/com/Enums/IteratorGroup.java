@@ -1,4 +1,4 @@
-package obinox.com;
+package obinox.com.Enums;
 
 import java.util.ArrayList;
 import java.util.Arrays;
