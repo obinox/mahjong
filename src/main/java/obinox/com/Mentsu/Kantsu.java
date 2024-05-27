@@ -9,7 +9,7 @@ public class Kantsu extends Mentsu {
         this.tsu = MentsuType.ANKAN;
     }
 
-    public Kantsu(Koutsu kou, Tile tile, int from) {
+    public Kantsu(Koutsu kou, Tile tile, Tile from) {
         super(kou, tile, from);
         if (kou.tsu == MentsuType.ANKOU) {
             this.tsu = MentsuType.DAIMINKAN;

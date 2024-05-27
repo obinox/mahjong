@@ -21,6 +21,7 @@ public enum IteratorGroup {
     ROUTOUHAI(MANROUTOU, PINROUTOU, SOUROUTOU),
     JIHAI(KAZEHAI, SANGENPAI),
     YAOCHUUHAI(ROUTOUHAI, JIHAI),
+    ALL(SHUUPAI, JIHAI),
     AKAPAI(new Tile[]{Tile.MAN0, Tile.PIN0, Tile.SOU0}),
     MIDORIPAI(new Tile[]{Tile.SOU2, Tile.SOU3, Tile.SOU4, Tile.SOU6, Tile.SOU8, Tile.GREEN}),
     KUROHAI(new Tile[]{Tile.PIN2, Tile.PIN4, Tile.PIN8, Tile.EAST, Tile.SOUTH, Tile.WEST, Tile.NORTH}),
@@ -43,10 +44,19 @@ public enum IteratorGroup {
     public static boolean isIn(IteratorGroup iter, Tile t){
         return iter.iterator.contains(t);
     }
-    public static boolean isIn(IteratorGroup iter, Tile[] ts){
+
+    public static boolean isAllIn(IteratorGroup iter, Tile[] ts){
         boolean b = true;
         for (Tile t: ts){
             b = b && iter.iterator.contains(t);
+        }
+        return b;
+    }
+
+    public static boolean isAnyIn(IteratorGroup iter, Tile[] ts){
+        boolean b = false;
+        for (Tile t: ts){
+            b = b || iter.iterator.contains(t);
         }
         return b;
     }

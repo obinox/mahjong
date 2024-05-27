@@ -3,6 +3,7 @@ package obinox.com;
 import obinox.com.Enums.Tile;
 import obinox.com.Mentsu.Mentsu;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -11,24 +12,12 @@ import java.util.Scanner;
  *
  */
 public class Main {
-    public final int ba = 0;
-    public final int kyoku = 0;
-    public final int honba = 0;
-    public final int jun = 1;
+
     public static void main(String[] args) {
-
-        Mentsu m1 = MentsuGen.mentsu(new Tile[]{Tile.PIN8, Tile.PIN8, Tile.PIN8});
-        System.out.println(m1);
-        System.out.println(m1.getClass());
-
-
-        Mentsu m2 = MentsuGen.mentsu(new Tile[]{Tile.PIN7, Tile.PIN8, Tile.PIN9});
-        System.out.println(m2);
-        System.out.println(m2.getClass());
-
-        Mentsu m3 = MentsuGen.mentsu(new Tile[]{Tile.EAST, Tile.SOUTH, Tile.WEST});
-        System.out.println(m3);
-        System.out.println(m3.getClass());
+        Tile ba = Tile.EAST;
+        int kyoku = 0;
+        int honba = 0;
+        int jun = 1;
 
         Scanner scn = new Scanner(System.in);
 
@@ -50,7 +39,7 @@ public class Main {
 
         try {
             for (int h=0;h<4;h++){
-                hands[h].setKyoku(haipais[h], h);
+                hands[h].setKyoku(haipais[h], ba, Tile.of(Tile.EAST.ordinal()+h));
             }
         } catch (MahjongException e) {
             System.out.println(e.getMessage());

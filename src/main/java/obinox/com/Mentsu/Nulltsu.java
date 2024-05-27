@@ -5,6 +5,6 @@ import obinox.com.Mentsu.Mentsu;
 
 public class Nulltsu extends Mentsu {
     public Nulltsu(Tile[] tiles) {
-        super(tiles, -1);
+        super(tiles, Tile.NULL);
     }
 }

@@ -1,7 +1,9 @@
 package obinox.com;
 
+import obinox.com.Enums.IteratorGroup;
 import obinox.com.Enums.MahjongError;
 import obinox.com.Enums.Tile;
+import obinox.com.Mentsu.Koutsu;
 import obinox.com.Mentsu.Mentsu;
 import obinox.com.Mentsu.Taatsu;
 import obinox.com.Mentsu.Toitsu;
@@ -15,12 +17,15 @@ public class Hand {
     public final List<Mentsu> naki = new ArrayList<>();
     public final List<Tile> kawa = new ArrayList<>();
     private Tile tsumohai;
-    private int direction = -1;
+
+    private Tile ba;
+    private Tile ji;
 
     Hand(){}
 
-    public void setKyoku(Tile[] tiles, int d) throws MahjongException{
-        this.direction = d;
+    public void setKyoku(Tile[] tiles, Tile b, Tile j) throws MahjongException{
+        this.ba = b;
+        this.ji = j;
         if (tiles.length != 13){
             throw new MahjongException(MahjongError.HAIPAI_ERROR);
         }
@@ -40,7 +45,7 @@ public class Hand {
             throw new MahjongException(MahjongError.IS_ALREADY_TSUMO);
         }
         this.tsumohai = t;
-        System.out.println("Direction: "+this.direction+", Tsumo:"+this.tsumohai);
+        System.out.println("Direction: "+this.ji +", Tsumo:"+this.tsumohai);
     }
 
     @Override
@@ -65,19 +70,52 @@ public class Hand {
         return t;
     }
 
-    public Mentsu pong(Toitsu toi, Tile tile, int from){
-        Mentsu men = MentsuGen.fuuro(toi, tile, from);
-        naki.add(men);
+    public Mentsu pong(Toitsu toi, Tile tile, Tile from){
+        Mentsu men = NewMentsu.fuuro(toi, tile, from);
+        this.naki.add(men);
         return men;
     }
     public Mentsu chii(Taatsu taa, Tile tile){
-        Mentsu men = MentsuGen.fuuro(taa, tile, (this.direction+3)%4);
-        naki.add(men);
+        Mentsu men = NewMentsu.fuuro(taa, tile, IteratorGroup.KAZEHAI.iterator.get((this.ji.value+3)%4));
+        this.naki.add(men);
         return men;
     }
-    public Mentsu kan(Toitsu toi, Tile tile, int from){
-        Mentsu men = MentsuGen.fuuro(toi, tile, from);
-        naki.add(men);
+    public Mentsu kan(Koutsu kou, Tile tile, Tile from){
+        Mentsu men = NewMentsu.fuuro(kou, tile, from);
+        this.naki.add(men);
         return men;
+    }
+
+    public void isTenpai(){
+        //2-3-3-3-3
+        // tiles set
+        Tile[] ts = new Tile[13];
+        int i;
+        i=0;
+        for (Tile t: this.tiles){
+            ts[i] = t;
+            i++;
+        }
+
+        Tile[] ts1;
+        for (Tile t: Tile.values()){
+            ts1 = Arrays.copyOf(ts, ts.length+1);
+            ts1[13] = t;
+            Arrays.sort(ts1);
+        }
+
+        Mentsu[] ms = new Mentsu[4];
+        i=0;
+        for (Mentsu m: this.naki){
+            ms[i] = m;
+            i++;
+        }
+        this.naki.size();
+        //2-2-2-2-2-2-2
+        //Kokushi Musou
+    }
+
+    public void YakuCalc(){
+
     }
 }

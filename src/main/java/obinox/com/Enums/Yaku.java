@@ -837,6 +837,11 @@ public enum Yaku {
      * @see Yaku#CHU
      */
     CHU9(26, 0),
+
+    /**
+     * <h1>No Yaku(<i>NUL</i>)</h1>
+     */
+    NOY(0, 0)
     ;
     public final int menzen;
     public final int fuuro;

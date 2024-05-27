@@ -56,6 +56,9 @@ public enum Tile {
     GREEN(2, Group.SANGEN, "6z", 4),
     RED(3, Group.SANGEN, "7z", 4),
 
+    //null
+    NULL(0, Group.NULL, "nn", 0),
+
     ;
 
     public final int value;
@@ -72,6 +75,7 @@ public enum Tile {
     public final String getStr(){
         return this.str;
     }
+    public final int getInt() { return this.ordinal(); }
 
     public static boolean equal(Tile t1, Tile t2){
         return t1.group == t2.group && t1.value == t2.value;
@@ -113,8 +117,12 @@ public enum Tile {
     }
 
     private static final Map<String, Tile> strFinder = Collections.unmodifiableMap(Stream.of(values()).collect(Collectors.toMap(Tile::getStr, e->e)));
+    private static final Map<Integer, Tile> intFinder = Collections.unmodifiableMap(Stream.of(values()).collect(Collectors.toMap(Tile::getInt, e->e)));
     public static Tile of(String str){
         return strFinder.get(str);
+    }
+    public static Tile of(int i){
+        return intFinder.get(i);
     }
 
     public static List<Tile> getDora(Tile t){

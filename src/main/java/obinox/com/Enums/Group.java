@@ -7,6 +7,9 @@ public enum Group{
     KAZE(4),
     SANGEN(3),
 
+    //NULL
+    NULL(0),
+
     ;
 
     public final int count;
