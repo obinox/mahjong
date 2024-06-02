@@ -839,7 +839,7 @@ public enum Yaku {
     CHU9(26, 0),
 
     /**
-     * <h1>No Yaku(<i>NUL</i>)</h1>
+     * <h1>No Yaku(<i>NOY</i>)</h1>
      */
     NOY(0, 0)
     ;

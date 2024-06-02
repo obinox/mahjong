@@ -26,12 +26,14 @@ public enum IteratorGroup {
     MIDORIPAI(new Tile[]{Tile.SOU2, Tile.SOU3, Tile.SOU4, Tile.SOU6, Tile.SOU8, Tile.GREEN}),
     KUROHAI(new Tile[]{Tile.PIN2, Tile.PIN4, Tile.PIN8, Tile.EAST, Tile.SOUTH, Tile.WEST, Tile.NORTH}),
 
+    NULL(new Tile[]{Tile.NULL}),
+
     ;
 
     public final List<Tile> iterator;
 
     IteratorGroup(Tile[] iter){
-        this.iterator = Arrays.asList(iter);
+        this.iterator = new ArrayList<>(Arrays.asList(iter));
     }
 
     IteratorGroup(IteratorGroup... iter){
@@ -52,6 +54,33 @@ public enum IteratorGroup {
         }
         return b;
     }
+
+    public static boolean isAllIn(IteratorGroup iter, List<Tile> ts){
+        boolean b = true;
+        for (Tile t: ts){
+            b = b && iter.iterator.contains(t);
+        }
+        return b;
+    }
+
+    public static boolean isAllIn(Group g, Tile[] ts){
+        boolean b = true;
+        IteratorGroup iter = IteratorGroup.values()[g.ordinal()+6];
+        for (Tile t: ts){
+            b = b && iter.iterator.contains(t);
+        }
+        return b;
+    }
+
+    public static boolean isAllIn(Group g, List<Tile> ts){
+        boolean b = true;
+        IteratorGroup iter = IteratorGroup.values()[g.ordinal()+6];
+        for (Tile t: ts){
+            b = b && iter.iterator.contains(t);
+        }
+        return b;
+    }
+
 
     public static boolean isAnyIn(IteratorGroup iter, Tile[] ts){
         boolean b = false;

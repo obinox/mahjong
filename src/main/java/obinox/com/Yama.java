@@ -8,15 +8,15 @@ import java.util.List;
 
 public class Yama {
     //Wanpai
-    public final List<Tile> RINSHANPAI = new ArrayList<>(4);
-    public final List<Tile> DORAHYOUJIHAI = new ArrayList<>(5);
-    public final List<Tile> URADORAHYOUJIHAI = new ArrayList<>(5);
+    public final List<Tile> rinshanpai = new ArrayList<>(4);
+    public final List<Tile> dorahyoujihai = new ArrayList<>(5);
+    public final List<Tile> uradorahyoujihai = new ArrayList<>(5);
 
     //Dora
-    public final List<Tile> DORAPAI = new ArrayList<>(15);
+    public final List<Tile> dorapai = new ArrayList<>(15);
 
     //Haiyama
-    public final List<Tile> HAIYAMA =  new ArrayList<>(122);
+    public final List<Tile> haiYama =  new ArrayList<>(122);
     private int haiyamaSize = 122;
     private int haiteiIdx = 0;
 
@@ -38,20 +38,20 @@ public class Yama {
         }
         System.out.println(yamaCode);
 
-        this.RINSHANPAI.addAll(tiles.subList(0,4));
+        this.rinshanpai.addAll(tiles.subList(0,4));
         for (int i=4;i<14;i+=2){
-            this.DORAHYOUJIHAI.add(tiles.get(i));
-            this.URADORAHYOUJIHAI.add(tiles.get(i+1));
+            this.dorahyoujihai.add(tiles.get(i));
+            this.uradorahyoujihai.add(tiles.get(i+1));
         }
 
-        this.DORAPAI.addAll(Tile.getDora(DORAHYOUJIHAI.get(this.haiteiIdx)));
+        this.dorapai.addAll(Tile.getDora(dorahyoujihai.get(this.haiteiIdx)));
 
-        this.HAIYAMA.addAll(tiles.subList(14,136));
+        this.haiYama.addAll(tiles.subList(14,136));
 
-        System.out.println(RINSHANPAI);
-        System.out.println(DORAHYOUJIHAI);
-        System.out.println(DORAPAI);
-        System.out.println(HAIYAMA);
+        System.out.println(rinshanpai);
+        System.out.println(dorahyoujihai);
+        System.out.println(dorapai);
+        System.out.println(haiYama);
     }
 
     Yama(String yamaCode){
@@ -65,20 +65,20 @@ public class Yama {
         }
 //        System.out.println(yamaCode);
 
-        this.RINSHANPAI.addAll(tiles.subList(0,4));
+        this.rinshanpai.addAll(tiles.subList(0,4));
         for (int i=4;i<14;i+=2){
-            this.DORAHYOUJIHAI.add(tiles.get(i));
-            this.URADORAHYOUJIHAI.add(tiles.get(i+1));
+            this.dorahyoujihai.add(tiles.get(i));
+            this.uradorahyoujihai.add(tiles.get(i+1));
         }
 
-        this.DORAPAI.addAll(Tile.getDora(DORAHYOUJIHAI.get(this.haiteiIdx)));
+        this.dorapai.addAll(Tile.getDora(dorahyoujihai.get(this.haiteiIdx)));
 
-        this.HAIYAMA.addAll(tiles.subList(14,136));
+        this.haiYama.addAll(tiles.subList(14,136));
 
-        System.out.println(RINSHANPAI);
-        System.out.println(DORAHYOUJIHAI);
-        System.out.println(DORAPAI);
-        System.out.println(HAIYAMA);
+        System.out.println(rinshanpai);
+        System.out.println(dorahyoujihai);
+        System.out.println(dorapai);
+        System.out.println(haiYama);
     }
     @Override
     public String toString() {
@@ -94,11 +94,11 @@ public class Yama {
         int i = this.haiyamaSize;
         this.haiyamaSize--;
         System.out.println("remain: "+ haiyamaSize);
-        return this.HAIYAMA.remove(i-1);
+        return this.haiYama.remove(i-1);
     }
 
     public final Tile Rinshan(){
         this.haiteiIdx++;
-        return this.RINSHANPAI.remove(0);
+        return this.rinshanpai.remove(0);
     }
 }

@@ -1,6 +1,7 @@
 package obinox.com;
 
 import obinox.com.Enums.IteratorGroup;
+import obinox.com.Enums.Machi;
 import obinox.com.Enums.MahjongError;
 import obinox.com.Enums.Tile;
 import obinox.com.Mentsu.Koutsu;
@@ -8,9 +9,7 @@ import obinox.com.Mentsu.Mentsu;
 import obinox.com.Mentsu.Taatsu;
 import obinox.com.Mentsu.Toitsu;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Hand {
     private Tile[] tiles = new Tile[13];
@@ -45,6 +44,14 @@ public class Hand {
             throw new MahjongException(MahjongError.IS_ALREADY_TSUMO);
         }
         this.tsumohai = t;
+        System.out.println("Direction: "+this.ji +", Tsumo:"+this.tsumohai);
+    }
+
+    public void tsumo(Yama y) throws MahjongException{
+        if (this.tsumohai!=null){
+            throw new MahjongException(MahjongError.IS_ALREADY_TSUMO);
+        }
+        this.tsumohai = y.tsumo();
         System.out.println("Direction: "+this.ji +", Tsumo:"+this.tsumohai);
     }
 
@@ -86,35 +93,113 @@ public class Hand {
         return men;
     }
 
-    public void isTenpai(){
+    public EnumMap<Tile, Machi> isTenpai(){
         //2-3-3-3-3
-        // tiles set
-        Tile[] ts = new Tile[13];
-        int i;
-        i=0;
+        EnumMap<Tile, Machi> machiTile = new EnumMap<>(Tile.class);
+        @SuppressWarnings("unchecked") // just Map warns
+        EnumMap<Tile, Integer>[] tileMap = new EnumMap[]{
+                new EnumMap<>(Tile.class),
+                new EnumMap<>(Tile.class),
+                new EnumMap<>(Tile.class),
+                new EnumMap<>(Tile.class),
+        };
+        EnumMap<Tile, Integer> allTileMap = new EnumMap<>(Tile.class);
+
+        int[] tileCount = new int[]{0, 0, 0, 0};
+        List<List<Integer>> tileForm = new ArrayList<>(4);
+        for (int i=0;i<4;i++){
+            tileForm.add(new ArrayList<>(13));
+        }
+        int groupIdx = 0;
         for (Tile t: this.tiles){
-            ts[i] = t;
-            i++;
+            switch (t.group){
+                case SANGEN, KAZE -> groupIdx = 0;
+                case MAN -> groupIdx = 1;
+                case PIN -> groupIdx = 2;
+                case SOU -> groupIdx = 3;
+            }
+            tileCount[groupIdx]+=1;
+            if (!tileMap[groupIdx].containsKey(t)){
+                tileMap[groupIdx].put(t, 1);
+            } else {
+                tileMap[groupIdx].replace(t, tileMap[groupIdx].get(t)+1);
+            }
+            if (!allTileMap.containsKey(t)){
+                allTileMap.put(t, 1);
+            } else {
+                allTileMap.replace(t, allTileMap.get(t)+1);
+            }
+            tileForm.get(groupIdx).add(t.value);
         }
 
-        Tile[] ts1;
-        for (Tile t: Tile.values()){
-            ts1 = Arrays.copyOf(ts, ts.length+1);
-            ts1[13] = t;
-            Arrays.sort(ts1);
+        for (int i = 0; i<4; i++){
+            System.out.println(tileMap[i] + " " +  tileForm.get(i) + " " + tileMap[i].size() + " " + tileCount[i]);
         }
 
-        Mentsu[] ms = new Mentsu[4];
-        i=0;
-        for (Mentsu m: this.naki){
-            ms[i] = m;
-            i++;
+        // Check form of each group.
+        int[] countForm = new int[]{tileCount[0]%3, tileCount[1]%3, tileCount[2]%3, tileCount[3]%3};
+        Arrays.sort(countForm);
+        int handType;
+
+        System.out.println(Arrays.toString(countForm));
+        System.out.println(Arrays.equals(countForm, new int[]{0, 0, 2, 2}) || Arrays.equals(countForm, new int[]{0, 0, 0, 1}));
+        System.out.println(tileMap[0].size() == (tileCount[0]+2)/3);
+
+        if (Arrays.equals(countForm, new int[]{0, 0, 0, 1})){
+            handType = 1;
+        } else if (Arrays.equals(countForm, new int[]{0, 0, 2, 2})){
+            handType = 2;
+        } else {
+            return machiTile;
         }
-        this.naki.size();
+
+
+        // Check jihai form. Each Tiles can not be more than 3 (t<=3).
+
+        if (!(tileMap[0].size() == (tileCount[0]+2)/3)){
+            return machiTile;
+        }
+        for (int i: tileMap[0].values()){
+            if (i>3){
+                return machiTile;
+            }
+        }
+
+        // 1 or 4 form. 4 can be 1/3 or 2/2
+
+        int[] countMod3 = new int[]{tileCount[0]%3, tileCount[1]%3, tileCount[2]%3, tileCount[3]%3};
+        int[] formIdxs = new int[2];
+        if (handType==1){
+            for (int i=0;i<4;i++){
+                if (tileCount[i]%3==1&&tileCount[i]!=1){
+                    countMod3[i] = 4;
+                    handType = 4;
+                }
+            }
+        }
+
+        for (int i=1;i<4;i++){
+
+        }
+
+
+
+        System.out.println(Arrays.toString(countMod3));
+        System.out.println(handType);
+
+
+
+
+
+        // Check each shuupai form
+
         //2-2-2-2-2-2-2
         //Kokushi Musou
-    }
+        machiTile.put(Tile.NULL, Machi.NOM);
 
+        return machiTile;
+    }
+    //TODO machi tiles
     public void YakuCalc(){
 
     }
