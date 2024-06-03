@@ -4,11 +4,14 @@ import obinox.com.Enums.Agaru;
 import obinox.com.Enums.IteratorGroup;
 import obinox.com.Enums.Machi;
 import obinox.com.Enums.Tile;
+import obinox.com.Mentsu.Mentsu;
+import obinox.com.Mentsu.Shuntsu;
 import obinox.com.Util.Agari;
 import obinox.com.Util.Tenpai;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static obinox.com.Enums.Yaku.getYaku;
 import static obinox.com.Util.Tenpai.getTenpai;
 
 /**
@@ -40,9 +43,8 @@ public class Main {
 //                Tile.MAN3, Tile.MAN3,
 //                Tile.MAN4, Tile.MAN4,
 //                Tile.MAN5,
-//                Tile.MAN6, Tile.MAN6,
-//                Tile.MAN7, Tile.MAN7,
-//                Tile.MAN8, Tile.MAN8,
+//                Tile.MAN6, Tile.MAN7, Tile.MAN8,
+//                Tile.MAN6, Tile.MAN7, Tile.MAN8,
 //        };
         Tile[] tiles = new Tile[]{
                 Tile.MAN1, Tile.MAN2,
@@ -53,9 +55,20 @@ public class Main {
                 Tile.MAN9, Tile.MAN7,
                 Tile.MAN9, Tile.MAN8,
         };
+//        Tile[] tiles = new Tile[]{
+//                Tile.MAN3, Tile.MAN3,
+//                Tile.MAN4, Tile.MAN4,
+//                Tile.MAN6, Tile.MAN6, Tile.MAN6,
+//                Tile.PIN6, Tile.PIN6, Tile.PIN6,
+//                Tile.SOU6, Tile.SOU6, Tile.SOU6,
+//        };
         System.out.println(getTenpai(Arrays.asList(tiles)).toString());
-        System.out.println(Agari.getAgari(Arrays.asList(tiles), new ArrayList<>(), Tile.MAN1, Agaru.RON));
-
+        List<Mentsu> f = new ArrayList<>();
+        Mentsu m = new Shuntsu(new Tile[]{Tile.MAN6, Tile.MAN7, Tile.MAN8});
+        f.add(m);
+        Agari a = Agari.getAgari(Arrays.asList(tiles), new ArrayList<>(), Tile.MAN1, Agaru.TSUMO).get(0);
+        System.out.println(a);
+        System.out.println(getYaku(a, Tile.EAST, Tile.EAST));
 
 //        game();
 

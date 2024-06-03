@@ -3,12 +3,12 @@ package obinox.com.Enums;
 public enum Machi {
 
     /**
-     * <h1>Raynmen Machi(<i>RYM</i>)</h1>
+     * <h1>Raynmen Machi Low(<i>RYML</i>)</h1>
      * <h2>Value</h2>
      * <p>0 fu</p>
      * <h2>Waiting Type</h2>
      * <ul>
-     *     <li>Wait for {@link obinox.com.Mentsu.Shuntsu shuntsu}'s side two tiles</li>
+     *     <li>Wait for {@link obinox.com.Mentsu.Shuntsu shuntsu}'s side low tile</li>
      * </ul>
      *
      * @see obinox.com.Mentsu.Shuntsu
@@ -16,12 +16,12 @@ public enum Machi {
     RYML(0),
 
     /**
-     * <h1>Raynmen Machi(<i>RYM</i>)</h1>
+     * <h1>Raynmen Machi High(<i>RYMH</i>)</h1>
      * <h2>Value</h2>
      * <p>0 fu</p>
      * <h2>Waiting Type</h2>
      * <ul>
-     *     <li>Wait for {@link obinox.com.Mentsu.Shuntsu shuntsu}'s side two tiles</li>
+     *     <li>Wait for {@link obinox.com.Mentsu.Shuntsu shuntsu}'s side high tile</li>
      * </ul>
      *
      * @see obinox.com.Mentsu.Shuntsu

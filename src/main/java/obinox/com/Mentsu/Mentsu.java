@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public abstract class Mentsu implements Comparable<Mentsu>{
-    public final Tile[] mentsu;
+    public final Tile[] tiles;
     public final Tile from;
     public final int fuuroIdx;
     public MentsuType tsu;
@@ -18,13 +18,13 @@ public abstract class Mentsu implements Comparable<Mentsu>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Mentsu mentsu1 = (Mentsu) o;
-        return fuuroIdx == mentsu1.fuuroIdx && Arrays.equals(mentsu, mentsu1.mentsu) && from == mentsu1.from && tsu == mentsu1.tsu;
+        return fuuroIdx == mentsu1.fuuroIdx && Arrays.equals(tiles, mentsu1.tiles) && from == mentsu1.from && tsu == mentsu1.tsu;
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hash(from, fuuroIdx, tsu);
-        result = 31 * result + Arrays.hashCode(mentsu);
+        result = 31 * result + Arrays.hashCode(tiles);
         return result;
     }
 
@@ -32,14 +32,14 @@ public abstract class Mentsu implements Comparable<Mentsu>{
     public int compareTo(Mentsu o) {
 
         if (tsu.menzen == o.tsu.menzen){
-            if (mentsu.length == o.mentsu.length){
-                if (mentsu[0].ordinal() == o.mentsu[0].ordinal()){
-                    return mentsu[1].ordinal() - o.mentsu[1].ordinal();
+            if (tiles.length == o.tiles.length){
+                if (tiles[0].ordinal() == o.tiles[0].ordinal()){
+                    return tiles[1].ordinal() - o.tiles[1].ordinal();
                 } else {
-                    return mentsu[0].ordinal() - o.mentsu[0].ordinal();
+                    return tiles[0].ordinal() - o.tiles[0].ordinal();
                 }
             } else {
-                return mentsu.length - o.mentsu.length;
+                return tiles.length - o.tiles.length;
             }
         } else {
             if (tsu.menzen){
@@ -52,37 +52,37 @@ public abstract class Mentsu implements Comparable<Mentsu>{
 
     @Override
     public String toString() {
-        return Arrays.deepToString(this.mentsu);
+        return Arrays.deepToString(this.tiles);
     }
 
     public Mentsu(Tile[] tiles) {
-        this.mentsu = tiles;
+        this.tiles = tiles;
         this.from = Tile.NULL;
         this.fuuroIdx = -1;
     }
 
     public Mentsu(Tile[] tiles, Tile from) {
-        this.mentsu = tiles;
+        this.tiles = tiles;
         this.from = from;
         this.fuuroIdx = 0;
     }
 
     public Mentsu(Taatsu taa, Tile tile, int fuuro, Tile from) {
-        Tile[] tiles = new Tile[]{tile, taa.mentsu[0], taa.mentsu[1]};
+        Tile[] tiles = new Tile[]{tile, taa.tiles[0], taa.tiles[1]};
         Arrays.sort(tiles);
-        this.mentsu = tiles;
+        this.tiles = tiles;
         this.from = from;
         this.fuuroIdx = fuuro;
     }
 
     public Mentsu(Toitsu toi, Tile tile, Tile from) {
-        this.mentsu = new Tile[]{tile, toi.mentsu[0], toi.mentsu[1]};
+        this.tiles = new Tile[]{tile, toi.tiles[0], toi.tiles[1]};
         this.from = from;
         this.fuuroIdx = 0;
     }
 
     public Mentsu(Koutsu kou, Tile tile, Tile from) {
-        this.mentsu = new Tile[]{kou.mentsu[0], kou.mentsu[1], kou.mentsu[2], tile};
+        this.tiles = new Tile[]{kou.tiles[0], kou.tiles[1], kou.tiles[2], tile};
         this.from = from;
         this.fuuroIdx = 0;
     }

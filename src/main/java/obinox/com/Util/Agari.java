@@ -49,10 +49,13 @@ public class Agari {
     @SuppressWarnings("DataFlowIssue")
     public static List<Agari> getAgari(List<Tile> tiles, List<Mentsu> naki, Tile agaruTile, Agaru agaru){
         List<Tile> fuuro = new ArrayList<>();
-        boolean menzen = naki.isEmpty();
+        boolean menzen = true;
+        for (Mentsu m: naki){
+            menzen = menzen && m.tsu.menzen;
+        }
 
         for (Mentsu m: naki){
-            fuuro.addAll(List.of(m.mentsu));
+            fuuro.addAll(List.of(m.tiles));
         }
 
         List<Tenpai> tenpai = Tenpai.getTenpai(tiles, fuuro);
@@ -174,51 +177,51 @@ public class Agari {
             if (!hasToitsu){
                 count = new EnumMap<>(Tile.class);
                 sub = stack.pop();
-                for (Tile s: sub.getKey()){
+                for (Tile s: sub.getValue1()){
                     count.merge(s, 1, (v, p) -> v+1);
                 }
                 for (Tile s: count.keySet()){
                     if (count.get(s)>=2){
-                        subTile = new ArrayList<>(List.copyOf(sub.getKey()));
-                        subMentsu = new ArrayList<>(List.copyOf(sub.getValue1()));
+                        subTile = new ArrayList<>(List.copyOf(sub.getValue1()));
+                        subMentsu = new ArrayList<>(List.copyOf(sub.getValue2()));
                         subTile.remove(s);
                         subTile.remove(s);
                         subMentsu.add(new Toitsu(new Tile[]{s, s}));
-                        stack.push(new Triplet<>(subTile, subMentsu, sub.getValue2()));
+                        stack.push(new Triplet<>(subTile, subMentsu, sub.getValue3()));
                     }
                 }
             }
         }
         while (!stack.isEmpty()){
             target = stack.pop();
-            length = target.getKey().size();
+            length = target.getValue1().size();
             if (length == 0){
-                Collections.sort(target.getValue1());
-                out.add(new Agari(agaruTile, target.getValue1(), target.getValue2(), menzen, agaru));
+                Collections.sort(target.getValue2());
+                out.add(new Agari(agaruTile, target.getValue2(), target.getValue3(), menzen, agaru));
             } else {
                 for (int i=0; i<length-2; i++){
-                    if (target.getKey().contains(Tile.of(target.getKey().get(i), 1)) && target.getKey().contains(Tile.of(target.getKey().get(i), 2))){
-                        Tile at = target.getKey().get(i);
-                        subTile = new ArrayList<>(List.copyOf(target.getKey()));
-                        subMentsu = new ArrayList<>(List.copyOf(target.getValue1()));
+                    if (target.getValue1().contains(Tile.of(target.getValue1().get(i), 1)) && target.getValue1().contains(Tile.of(target.getValue1().get(i), 2))){
+                        Tile at = target.getValue1().get(i);
+                        subTile = new ArrayList<>(List.copyOf(target.getValue1()));
+                        subMentsu = new ArrayList<>(List.copyOf(target.getValue2()));
                         subTile.remove(Tile.of(at, 0));
                         subTile.remove(Tile.of(at, 1));
                         subTile.remove(Tile.of(at, 2));
                         subMentsu.add(new Shuntsu(new Tile[]{Tile.of(at, 0), Tile.of(at, 1), Tile.of(at, 2)}));
-                        stack.push(new Triplet<>(subTile, subMentsu, target.getValue2()));
+                        stack.push(new Triplet<>(subTile, subMentsu, target.getValue3()));
                     }
                 }
                 for (int i=0; i<length-2; i++){
-                    if (Collections.frequency(target.getKey(), target.getKey().get(i))>=3){
-                        Tile at = target.getKey().get(i);
-                        subTile = new ArrayList<>(List.copyOf(target.getKey()));
-                        subMentsu = new ArrayList<>(List.copyOf(target.getValue1()));
+                    if (Collections.frequency(target.getValue1(), target.getValue1().get(i))>=3){
+                        Tile at = target.getValue1().get(i);
+                        subTile = new ArrayList<>(List.copyOf(target.getValue1()));
+                        subMentsu = new ArrayList<>(List.copyOf(target.getValue2()));
                         subTile.remove(Tile.of(at, 0));
                         subTile.remove(Tile.of(at, 0));
                         subTile.remove(Tile.of(at, 0));
-                        subMentsu.add(new Shuntsu(new Tile[]{Tile.of(at, 0), Tile.of(at, 0), Tile.of(at, 0)}));
+                        subMentsu.add(new Koutsu(new Tile[]{Tile.of(at, 0), Tile.of(at, 0), Tile.of(at, 0)}));
                         i+=2;
-                        stack.push(new Triplet<>(subTile, subMentsu, target.getValue2()));
+                        stack.push(new Triplet<>(subTile, subMentsu, target.getValue3()));
                     }
                 }
             }

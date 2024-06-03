@@ -1,12 +1,13 @@
 package obinox.com.Enums;
 
+import obinox.com.Mentsu.Kantsu;
+import obinox.com.Mentsu.Koutsu;
 import obinox.com.Mentsu.Mentsu;
-import obinox.com.Util.Pair;
-import obinox.com.Util.Tenpai;
+import obinox.com.Mentsu.Shuntsu;
+import obinox.com.Util.Agari;
+import obinox.com.Util.Triplet;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * <h1>{@link Yaku} for Mahjong</h1>
@@ -201,7 +202,6 @@ public enum Yaku {
      * <p>{@link Rule#Fuuro Fuuro}: 1 han</p>
      * <h2>Requirements</h2>
      * <ul>
-     *     <li>Player must be {@link Rule#Menzen menzen}</li>
      *     <li>Have all of the {@link Rule#Tiles shuupai} in one suit</li>
      *     <li>{@link Rule#Mentsu Shuntsu} must form 123, 456, 789</li>
      * </ul>
@@ -860,55 +860,362 @@ public enum Yaku {
     }
 
 
-    public static List<List<Yaku>> getYaku(List<List<Mentsu>> agari, boolean tsumo){
+    public static List<Yaku> getYaku(Agari agari, Tile ba, Tile ji){
 
+        List<Yaku> out = new ArrayList<>();
+        List<Yaku> yakuman = new ArrayList<>();
+        Map<Mentsu, Integer> mentsuCount;
+        EnumMap<Group, Integer> groupCount;
+        Map<Integer, Integer> intCount;
+        Map<Integer, EnumMap<Group, Boolean>> intGroup;
+        boolean b;
+        int c;
 
+        //SMO
+        if (agari.menzen && agari.agaru == Agaru.TSUMO){
+            out.add(SMO);
+        }
 
         //TAN
+        b = true;
+        for (Mentsu m: agari.mentsu){
+            b = b && IteratorGroup.isAllIn(IteratorGroup.CHUNCHANPAI, m.tiles);
+        }
+        if (b){
+            out.add(TAN);
+        }
+
         //PFU
+        b = true;
+        if (agari.menzen && (agari.machi == Machi.RYML || agari.machi == Machi.RYMH)){
+            for (Mentsu m: agari.mentsu){
+                if (m.tiles.length == 2){
+                    b = b && m.tiles[0]!=ba && m.tiles[0]!=ji && !IteratorGroup.isAllIn(IteratorGroup.SANGENPAI, m.tiles);
+                } else {
+                    b = b && IteratorGroup.isAllIn(IteratorGroup.SHUUPAI, m.tiles);
+                }
+            }
+        }
+        if (b){
+            out.add(PFU);
+        }
+
         //IPK
+        //RPK
+        mentsuCount = new HashMap<>();
+        c = 0;
+        if (agari.menzen){
+            for (Mentsu m: agari.mentsu){
+                if (m.tsu == MentsuType.ANJUN){
+                    mentsuCount.merge(m, 1, (v, p) -> v+1);
+                }
+            }
+        }
+        for (Mentsu m: mentsuCount.keySet()){
+            if (mentsuCount.get(m)>=2){
+                c++;
+            }
+        }
+        switch (c) {
+            case 1 -> out.add(IPK);
+            case 2 -> out.add(RPK);
+        }
+
         //ITT
+        b = true;
+        groupCount = new EnumMap<>(Group.class);
+        for (Mentsu m: agari.mentsu){
+            if (m.getClass() == Shuntsu.class){
+                groupCount.merge(m.tiles[0].group, 1, (v, p) -> v+1);
+            }
+        }
+        for (Group g: groupCount.keySet()){
+            if (groupCount.get(g)>=3){
+                Mentsu[] ittsuu = new Mentsu[]{null, null, null};
+                for (Mentsu m: agari.mentsu){
+                    if (m.getClass() == Shuntsu.class && m.tiles[0].group == g){
+                        switch (m.tiles[0].value) {
+                            case 1 -> ittsuu[0] = m;
+                            case 4 -> ittsuu[1] = m;
+                            case 7 -> ittsuu[2] = m;
+                        }
+                    }
+                }
+                for (Mentsu m: ittsuu){
+                    b = b && m != null;
+                }
+            }
+        }
+        if (b){
+            out.add(ITT);
+        }
+
         //YAK
+        for (Mentsu m: agari.mentsu){
+            if (m.tiles.length >= 3){
+                switch (m.tiles[0]) {
+                    case EAST, SOUTH, WEST, NORTH -> {
+                        if (m.tiles[0] == ba){
+                            out.add(YAKB);
+                        }
+                        if (m.tiles[0] == ji){
+                            out.add(YAKJ);
+                        }
+                    }
+                    case WHITE -> out.add(YAKW);
+                    case GREEN -> out.add(YAKG);
+                    case RED -> out.add(YAKR);
+                }
+            }
+        }
+
         //SDJ
+        b = false;
+        intGroup = new HashMap<>();
+        for (Mentsu m: agari.mentsu){
+            if (m.getClass() == Shuntsu.class){
+                if (intGroup.get(m.tiles[0].value) == null){
+                    intGroup.put(m.tiles[0].value, new EnumMap<>(Group.class));
+                }
+                intGroup.get(m.tiles[0].value).merge(m.tiles[0].group, true, (v1, v2) -> v1);
+            }
+        }
+        for (int i: intGroup.keySet()){
+            EnumMap<Group, Boolean> e;
+            e = intGroup.get(i);
+            b = b || (e.get(Group.MAN) != null && e.get(Group.PIN) != null && e.get(Group.SOU) != null);
+        }
+        if (b){
+            out.add(SDJ);
+        }
+
         //SDO
+        b = false;
+        intGroup = new HashMap<>();
+        for (Mentsu m: agari.mentsu){
+            if (m.getClass() == Koutsu.class || m.getClass() == Kantsu.class){
+                if (intGroup.get(m.tiles[0].value) == null){
+                    intGroup.put(m.tiles[0].value, new EnumMap<>(Group.class));
+                }
+                intGroup.get(m.tiles[0].value).merge(m.tiles[0].group, true, (v1, v2) -> v1);
+            }
+        }
+        for (int i: intGroup.keySet()){
+            EnumMap<Group, Boolean> e;
+            e = intGroup.get(i);
+            b = b || (e.get(Group.MAN) != null && e.get(Group.PIN) != null && e.get(Group.SOU) != null);
+        }
+        if (b){
+            out.add(SDO);
+        }
+
         //TOI
+        c = 0;
+        for (Mentsu m: agari.mentsu){
+            if (m.getClass() == Koutsu.class || m.getClass() == Kantsu.class){
+                c++;
+            }
+        }
+        if (c == 4){
+            out.add(TOI);
+        }
+
         //SNA
+        //SUA
+        c = 0;
+        for (Mentsu m: agari.mentsu){
+            if (m.tsu == MentsuType.ANKOU || m.tsu == MentsuType.ANKAN){
+                c++;
+            }
+        }
+        if (c == 3){
+            out.add(SNA);
+        } else if (agari.menzen && c == 4) {
+            if (agari.machi == Machi.TAN){
+                yakuman.add(SUA1);
+            } else {
+                yakuman.add(SUA);
+            }
+        }
+
         //SNK
+        //SUK
+        c = 0;
+        for (Mentsu m: agari.mentsu){
+            if (m.getClass() == Kantsu.class){
+                c++;
+            }
+        }
+        if (c == 3){
+            out.add(SNK);
+        } else if (c == 4) {
+            yakuman.add(SUK);
+        }
+
         //CHA
         //JUN
-        //RPK
-        //SSG
         //HRO
+        //CHR
+        b = true;
+        for (Mentsu m: agari.mentsu){
+            b = b && IteratorGroup.isAllIn(IteratorGroup.ROUTOUHAI, m.tiles);
+        }
+        if (b){
+            yakuman.add(CHR);
+        } else {
+            b = true;
+            for (Mentsu m: agari.mentsu){
+                b = b && IteratorGroup.isAllIn(IteratorGroup.YAOCHUUHAI, m.tiles);
+            }
+            if (b){
+                out.add(HRO);
+            } else {
+                b = true;
+                for (Mentsu m: agari.mentsu){
+                    b = b && IteratorGroup.isAnyIn(IteratorGroup.ROUTOUHAI, m.tiles);
+                }
+                if (b){
+                    out.add(JUN);
+                } else {
+                    b = true;
+                    for (Mentsu m: agari.mentsu){
+                        b = b && IteratorGroup.isAnyIn(IteratorGroup.YAOCHUUHAI, m.tiles);
+                    }
+                    if (b){
+                        out.add(CHA);
+                    }
+                }
+            }
+        }
+
+        //SSG
+        //DSG
+        c = 0;
+        for (Mentsu m: agari.mentsu){
+            if (IteratorGroup.isAllIn(IteratorGroup.SANGENPAI, m.tiles)){
+                c += Math.min(m.tiles.length, 3);
+            }
+        }
+        if (c == 8){
+            out.add(SSG);
+        } else if (c == 9){
+            yakuman.add(DSG);
+        }
+
         //HON
         //CHN
+        //CHU
+        //CHU13
+        groupCount = new EnumMap<>(Group.class);
+        intCount = new HashMap<>();
+        c = 0;
+        b = true;
+        for (Mentsu m: agari.mentsu){
+            groupCount.merge(m.tiles[0].group, 1, (v, p) -> v+1);
+        }
+        for (Group g: new Group[]{Group.MAN, Group.PIN, Group.SOU}){
+            if (groupCount.get(g) != null){
+                c++;
+            }
+        }
+        if (c == 1){
+            if (groupCount.size() == 1){
+                out.add(CHN);
+                if (agari.menzen){
+                    int[] chu = {3,1,1,1,1,1,1,1,3};
+                    for (Mentsu m: agari.mentsu){
+                        for (Tile t: m.tiles){
+                            intCount.merge(t.value, 1, (v, p) -> v+1);
+                        }
+                    }
+                    for (int i=1; i<10; i++){
+                        b = b && intCount.get(i) >= chu[i-1];
+                    }
+                    if (b){
+                        for (int i=1; i<10; i++){
+                            if (intCount.get(i) - chu[i-1] == 1){
+                                if (agari.agaripai.value == i){
+                                    yakuman.add(CHU9);
+                                } else {
+                                    yakuman.add(CHU);
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                out.add(HON);
+            }
+        }
+
+
         //CHI
+        if (agari.machi == Machi.CHI){
+            out.add(CHI);
+        }
+
+        //KMU
+        if (agari.machi == Machi.KMU){
+            yakuman.add(KMU);
+        }
+
+        //KMU13
+        if (agari.machi == Machi.KMU13){
+            yakuman.add(KMU13);
+        }
+
+
+        //SSS
+        //DSS
+        c = 0;
+        for (Mentsu m: agari.mentsu){
+            if (IteratorGroup.isAllIn(IteratorGroup.KAZEHAI, m.tiles)){
+                c+=Math.min(m.tiles.length, 3);
+            }
+        }
+        if (c == 11){
+            yakuman.add(SSS);
+        } else if (c == 12){
+            yakuman.add(DSS);
+        }
+
+        //RYU
+        b = true;
+        for (Mentsu m: agari.mentsu){
+            b = b && IteratorGroup.isAllIn(IteratorGroup.MIDORIPAI, m.tiles);
+        }
+        if (b){
+            yakuman.add(RYU);
+        }
+
+        //TSU
+        b = true;
+        for (Mentsu m: agari.mentsu){
+            b = b && IteratorGroup.isAllIn(IteratorGroup.JIHAI, m.tiles);
+        }
+        if (b){
+            yakuman.add(TSU);
+        }
+
 
 
         //RCH
         //DRI
         //IPP
-        //SMO
         //RIN
         //HAI
         //HOU
         //CHK
 
-        //KMU
-        //DSG
-        //SUA
-        //SSS
-        //DSS
-        //TSU
-        //RYU
-        //CHR
-        //CHU
-        //SUK
+
 
         //TEN
         //CHH
-
-        List<List<Yaku>> out = new ArrayList<>();
-        return out;
+        if (yakuman.isEmpty()){
+            return out;
+        } else {
+            return yakuman;
+        }
     }
 }
 

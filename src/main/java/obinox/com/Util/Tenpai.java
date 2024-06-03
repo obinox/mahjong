@@ -127,7 +127,7 @@ public class Tenpai extends Pair<Tile, Machi> implements Comparable<Pair<Tile, M
                             } else if (!IteratorGroup.isIn(IteratorGroup.JIHAI, target.get(0))){
                                 if (Tile.sequence(target.get(0), target.get(1))) {
                                     Tile t1 = Tile.of(target.get(0), -1);
-                                    if (t1 != Tile.NULL && !(count.get(t1)>3)){
+                                    if (t1 != Tile.NULL && !(count.getOrDefault(t1, 0)>3)){
                                         if (t1.value == 7){
                                             wait.add(new Tenpai(t1, Machi.PEN));
                                         } else {
@@ -135,7 +135,7 @@ public class Tenpai extends Pair<Tile, Machi> implements Comparable<Pair<Tile, M
                                         }
                                     }
                                     Tile t2 = Tile.of(target.get(0), 2);
-                                    if (t2 != Tile.NULL && !(count.get(t2)>3)){
+                                    if (t2 != Tile.NULL && !(count.getOrDefault(t2, 0)>3)){
                                         if (t2.value == 3){
                                             wait.add(new Tenpai(t2, Machi.PEN));
                                         } else {
@@ -144,7 +144,7 @@ public class Tenpai extends Pair<Tile, Machi> implements Comparable<Pair<Tile, M
                                     }
                                 } else if (Tile.sequence(target.get(0), target.get(1), 2)) {
                                     Tile t = Tile.of(target.get(0), 1);
-                                    if (t != Tile.NULL && !(count.get(t) > 3)){
+                                    if (t != Tile.NULL && !(count.getOrDefault(t, 0) > 3)){
                                         wait.add(new Tenpai(t, Machi.KAN));
                                     }
                                 }

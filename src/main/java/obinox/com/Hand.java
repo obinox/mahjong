@@ -1,7 +1,6 @@
 package obinox.com;
 
 import obinox.com.Enums.IteratorGroup;
-import obinox.com.Enums.Machi;
 import obinox.com.Enums.MahjongError;
 import obinox.com.Enums.Tile;
 import obinox.com.Mentsu.Koutsu;
@@ -97,7 +96,7 @@ public class Hand {
     public List<Tenpai> getTenpai(){
         List<Tile> fuuro = new ArrayList<>();
         for (Mentsu m: this.naki){
-            fuuro.addAll(List.of(m.mentsu));
+            fuuro.addAll(List.of(m.tiles));
         }
         return Tenpai.getTenpai(this.tiles, fuuro);
     }
