@@ -1,5 +1,6 @@
 package obinox.com;
 
+import obinox.com.Enums.Agaru;
 import obinox.com.Enums.IteratorGroup;
 import obinox.com.Enums.Tile;
 import obinox.com.Mentsu.*;
@@ -8,7 +9,7 @@ import java.util.Arrays;
 
 public class NewMentsu {
 
-    public static Mentsu mentsu(Tile[] tiles){
+    public static Mentsu mentsu(Tile[] tiles, Agaru agaru){
         Arrays.sort(tiles);
         if (tiles.length == 3) {
             if (Tile.equal(tiles)){
@@ -26,6 +27,10 @@ public class NewMentsu {
             return new Kantsu(tiles);
         }
         return new Nulltsu(new Tile[0]);
+    }
+
+    public static Mentsu mentsu(Tile[] tiles){
+        return mentsu(tiles, Agaru.TSUMO);
     }
 
     public static Mentsu fuuro(Toitsu toi, Tile tile, Tile from){

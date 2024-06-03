@@ -1,5 +1,13 @@
 package obinox.com.Enums;
 
+import obinox.com.Mentsu.Mentsu;
+import obinox.com.Util.Pair;
+import obinox.com.Util.Tenpai;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
 /**
  * <h1>{@link Yaku} for Mahjong</h1>
  *
@@ -774,7 +782,7 @@ public enum Yaku {
     // Double Yakuman!!
 
     /**
-     * <h1>Kokushi Musou Juusan(13) Menmachi(<i>KMU13</i>)</h1>
+     * <h1>Kokushi Musou Juusan(13) Men Machi(<i>KMU13</i>)</h1>
      * <h2>Value</h2>
      * <p>Double Yakuman</p>
      * <h2>Requirements</h2>
@@ -849,6 +857,58 @@ public enum Yaku {
     Yaku(int m, int f){
         this.menzen=m;
         this.fuuro=f;
+    }
+
+
+    public static List<List<Yaku>> getYaku(List<List<Mentsu>> agari, boolean tsumo){
+
+
+
+        //TAN
+        //PFU
+        //IPK
+        //ITT
+        //YAK
+        //SDJ
+        //SDO
+        //TOI
+        //SNA
+        //SNK
+        //CHA
+        //JUN
+        //RPK
+        //SSG
+        //HRO
+        //HON
+        //CHN
+        //CHI
+
+
+        //RCH
+        //DRI
+        //IPP
+        //SMO
+        //RIN
+        //HAI
+        //HOU
+        //CHK
+
+        //KMU
+        //DSG
+        //SUA
+        //SSS
+        //DSS
+        //TSU
+        //RYU
+        //CHR
+        //CHU
+        //SUK
+
+        //TEN
+        //CHH
+
+        List<List<Yaku>> out = new ArrayList<>();
+        return out;
     }
 }
 

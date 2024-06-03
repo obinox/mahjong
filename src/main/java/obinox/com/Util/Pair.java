@@ -2,7 +2,7 @@ package obinox.com.Util;
 
 import java.util.Objects;
 
-public abstract class Pair<K, V> {
+public class Pair<K, V> {
     private final K key;
     private final V value;
     public Pair(K k, V v){

@@ -9,6 +9,7 @@ public enum MentsuType {
     SHOUMINKAN(4, false),
     ANKAN(4, true),
     ELSE(0, true),
+    NULL(0, false),
 
     ;
 

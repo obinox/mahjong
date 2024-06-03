@@ -13,7 +13,20 @@ public enum Machi {
      *
      * @see obinox.com.Mentsu.Shuntsu
      */
-    RYM(0),
+    RYML(0),
+
+    /**
+     * <h1>Raynmen Machi(<i>RYM</i>)</h1>
+     * <h2>Value</h2>
+     * <p>0 fu</p>
+     * <h2>Waiting Type</h2>
+     * <ul>
+     *     <li>Wait for {@link obinox.com.Mentsu.Shuntsu shuntsu}'s side two tiles</li>
+     * </ul>
+     *
+     * @see obinox.com.Mentsu.Shuntsu
+     */
+    RYMH(0),
 
     /**
      * <h1>Penchan Machi(<i>PEN</i>)</h1>
@@ -101,6 +114,20 @@ public enum Machi {
      * @see Yaku#KMU13
      */
     KMU(0),
+
+    /**
+     * <h1>Kokushi Musou Juusan(13) Men Machi(<i>KMU13</i>)</h1>
+     * <h2>Value</h2>
+     * <p>0 fu</p>
+     * <h2>Waiting Type</h2>
+     * <ul>
+     *     <li>Wait for 13 tile to complete {@link Yaku#KMU13 kokushi musou juusan men machi}</li>
+     * </ul>
+     *
+     * @see Yaku#KMU
+     * @see Yaku#KMU13
+     */
+    KMU13(0),
 
     /**
      * <h1>No Machi(<i>NOM</i>)</h1>
