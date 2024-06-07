@@ -1,13 +1,12 @@
 package obinox.com.Enums;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import obinox.com.Util.Pair;
+
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public enum Tile {
+public enum Tile{
     //Padding
     PAD(0, Group.NULL, "pd", 0),
 
@@ -16,6 +15,7 @@ public enum Tile {
     MAN2(2, Group.MAN, "2m",  4),
     MAN3(3, Group.MAN, "3m",  4),
     MAN4(4, Group.MAN, "4m",  4),
+    MAN0(5, Group.MAN, "0m",  1),
     MAN5(5, Group.MAN, "5m",  3),
     MAN6(6, Group.MAN, "6m",  4),
     MAN7(7, Group.MAN, "7m",  4),
@@ -27,6 +27,7 @@ public enum Tile {
     PIN2(2, Group.PIN, "2p",  4),
     PIN3(3, Group.PIN, "3p",  4),
     PIN4(4, Group.PIN, "4p",  4),
+    PIN0(5, Group.PIN, "0p",  1),
     PIN5(5, Group.PIN, "5p",  3),
     PIN6(6, Group.PIN, "6p",  4),
     PIN7(7, Group.PIN, "7p",  4),
@@ -38,6 +39,7 @@ public enum Tile {
     SOU2(2, Group.SOU, "2s",  4),
     SOU3(3, Group.SOU, "3s",  4),
     SOU4(4, Group.SOU, "4s",  4),
+    SOU0(5, Group.SOU, "0s",  1),
     SOU5(5, Group.SOU, "5s",  3),
     SOU6(6, Group.SOU, "6s",  4),
     SOU7(7, Group.SOU, "7s",  4),
@@ -56,9 +58,6 @@ public enum Tile {
     RED(3, Group.SANGEN, "7z", 4),
 
     //AkaDora
-    MAN0(5, Group.MAN, "0m",  1),
-    PIN0(5, Group.PIN, "0p",  1),
-    SOU0(5, Group.SOU, "0s",  1),
 
     //Null
     NULL(0, Group.NULL, "nl", 0),
@@ -132,12 +131,31 @@ public enum Tile {
         return intFinder.get(i);
     }
     public static Tile of(Group g, int v){
+        if (v>5){
+            v+=1;
+        }
         return intFinder.get(g.index+v);
     }
     public static Tile of(Tile t, int s){
+        if (t.value<5 && t.value+s>4){
+            s+=1;
+        }
+        if (t.value>4 && t.value+s<5){
+            s-=1;
+        }
+        if (t.value == 5 && s == 0){
+            return intFinder.get(t.group.index+6);
+        }
         Tile r = intFinder.get(t.ordinal()+s);
         if (r.group == t.group){
             return r;
+        } else {
+            return NULL;
+        }
+    }
+    public static Tile aka(Tile t){
+        if (t.value == 5){
+            return intFinder.get(t.group.index+5);
         } else {
             return NULL;
         }
@@ -146,5 +164,6 @@ public enum Tile {
     public static List<Tile> getDora(Tile t){
         return Arrays.stream(values()).filter(p -> (t.value%t.group.count)+1 == p.value && t.group == p.group).toList();
     }
+
 }
 

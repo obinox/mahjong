@@ -1,10 +1,13 @@
 package obinox.com.Enums;
 
 public enum Agaru {
-    TSUMO,
+    TSUMO(2),
+    RON(10),
 
-    RON,
-    
     ;
-    
+    public final int fu;
+
+    Agaru(int f){
+        this.fu = f;
+    }
 }

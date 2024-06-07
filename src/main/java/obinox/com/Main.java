@@ -56,19 +56,50 @@ public class Main {
                 Tile.MAN9, Tile.MAN8,
         };
 //        Tile[] tiles = new Tile[]{
+//                Tile.MAN1, Tile.MAN2,
+//                Tile.MAN3, Tile.MAN4,
+//                Tile.MAN5, Tile.MAN4,
+//                Tile.MAN0,
+//                Tile.MAN7, Tile.MAN7,
+//                Tile.MAN8, Tile.MAN9,
+//                Tile.MAN9, Tile.MAN8,
+//        };
+//        Tile[] tiles = new Tile[]{
+//                Tile.MAN1, Tile.MAN1,
+//                Tile.MAN3, Tile.MAN3,
+//                Tile.MAN7, Tile.MAN7,
+//                Tile.MAN0,
+//                Tile.MAN9, Tile.MAN9,
+//                Tile.PIN1, Tile.PIN1,
+//                Tile.MAN2, Tile.MAN2,
+//        };
+//        Tile[] tiles = new Tile[]{
 //                Tile.MAN3, Tile.MAN3,
 //                Tile.MAN4, Tile.MAN4,
 //                Tile.MAN6, Tile.MAN6, Tile.MAN6,
 //                Tile.PIN6, Tile.PIN6, Tile.PIN6,
 //                Tile.SOU6, Tile.SOU6, Tile.SOU6,
 //        };
+//        Tile[] tiles = new Tile[]{
+//                Tile.WHITE, Tile.WHITE, Tile.WHITE,
+//                Tile.GREEN, Tile.GREEN, Tile.GREEN,
+//                Tile.RED, Tile.RED, Tile.RED,
+//                Tile.SOU5, Tile.SOU4, Tile.SOU6,
+//                Tile.SOU5,
+//        };
+//        Tile[] tiles = new Tile[]{
+//                Tile.SOU1,Tile.SOU2,Tile.SOU3,Tile.SOUTH,
+//                Tile.SOU1,Tile.SOU2,Tile.SOU3,Tile.SOUTH,
+//                Tile.SOU1,Tile.SOU2,Tile.SOU3,
+//                Tile.SOU1,Tile.SOU2,
+//        };
         System.out.println(getTenpai(Arrays.asList(tiles)).toString());
-        List<Mentsu> f = new ArrayList<>();
-        Mentsu m = new Shuntsu(new Tile[]{Tile.MAN6, Tile.MAN7, Tile.MAN8});
-        f.add(m);
-        Agari a = Agari.getAgari(Arrays.asList(tiles), new ArrayList<>(), Tile.MAN1, Agaru.TSUMO).get(0);
+//        List<Mentsu> f = new ArrayList<>();
+//        Mentsu m = new Shuntsu(new Tile[]{Tile.MAN6, Tile.MAN7, Tile.MAN8});
+//        f.add(m);
+        List<Agari> a = Agari.getAgari(Arrays.asList(tiles), new ArrayList<>(), Tile.MAN0, Agaru.TSUMO);
         System.out.println(a);
-        System.out.println(getYaku(a, Tile.EAST, Tile.EAST));
+        System.out.println(getYaku(a.get(0), Tile.EAST, Tile.EAST));
 
 //        game();
 

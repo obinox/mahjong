@@ -2,11 +2,11 @@ package obinox.com.Enums;
 
 public enum Group{
     MAN(9, 0),
-    PIN(9, 9),
-    SOU(9, 18),
-    KAZE(4, 27),
-    SANGEN(3, 31),
-    AKA(3, 34),
+    PIN(9, 10),
+    SOU(9, 20),
+    KAZE(4, 30),
+    SANGEN(3, 34),
+    AKA(3, -1),
 
     //NULL
     NULL(0, -1),

@@ -15,18 +15,20 @@ public class Agari {
     public final Machi machi;
     public final boolean menzen;
     public final Agaru agaru;
+    public final List<Tile> aka = new ArrayList<>();
 
-    Agari(Tile t, List<Mentsu> mentsu, Machi m, boolean menzen, Agaru a){
+    Agari(Tile t, List<Mentsu> mentsu, Machi m, boolean menzen, Agaru a, List<Tile> aka){
         this.agaripai = t;
         this.mentsu = mentsu;
         this.machi = m;
         this.menzen = menzen;
         this.agaru = a;
+        this.aka.addAll(aka);
     }
 
     @Override
     public String toString() {
-        return machi.name()+" "+agaripai.name()+" "+agaru.name()+" "+mentsu.toString()+" "+menzen;
+        return machi.name()+" "+agaripai.name()+" "+agaru.name()+" "+mentsu.toString()+" "+aka+" "+menzen;
     }
 
     @Override
@@ -63,6 +65,18 @@ public class Agari {
             return new ArrayList<>();
         }
 
+        List<Tile> naTiles = new ArrayList<>();
+        List<Tile> aka = new ArrayList<>();
+        if (Tile.of(agaruTile, 0) != agaruTile){
+            aka.add(Tile.aka(agaruTile));
+        }
+        for (Tile t: tiles){
+            if (Tile.of(t, 0) != t){
+                aka.add(Tile.aka(t));
+            }
+            naTiles.add(Tile.of(t, 0));
+        }
+
         List<Tenpai> machi = new ArrayList<>();
         for (Tenpai t: tenpai){
             if (t.getKey() == agaruTile){
@@ -89,63 +103,79 @@ public class Agari {
 
         for (Tenpai t: machi){
             Tile at = t.getKey();
-            subTile = new ArrayList<>(List.copyOf(tiles));
+            subTile = new ArrayList<>(List.copyOf(naTiles));
             subMentsu = new ArrayList<>(naki);
             switch (t.getValue()){
                 case RYML -> {
                     hasToitsu = false;
+                    Tile t0 = Tile.of(at, 0);
+                    Tile t1 = Tile.of(at, 1);
+                    Tile t2 = Tile.of(at, 2);
 
-                    subTile.remove(Tile.of(at, 1));
-                    subTile.remove(Tile.of(at, 2));
-                    subMentsu.add(new Shuntsu(new Tile[]{at, Tile.of(at, 1), Tile.of(at, 2)}, agaru));
+                    subTile.remove(t1);
+                    subTile.remove(t2);
+                    subMentsu.add(new Shuntsu(new Tile[]{t0, t1, t2}, agaru));
                     stack.push(new Triplet<>(subTile, subMentsu, Machi.RYML));
                 }
                 case RYMH -> {
                     hasToitsu = false;
+                    Tile t0 = Tile.of(at, 0);
+                    Tile t1 = Tile.of(at, -1);
+                    Tile t2 = Tile.of(at, -2);
 
-                    subTile.remove(Tile.of(at, -2));
-                    subTile.remove(Tile.of(at, -1));
-                    subMentsu.add(new Shuntsu(new Tile[]{Tile.of(at, -2), Tile.of(at, -1), at}, agaru));
+                    subTile.remove(t1);
+                    subTile.remove(t2);
+                    subMentsu.add(new Shuntsu(new Tile[]{t2, t1, t0}, agaru));
                     stack.push(new Triplet<>(subTile, subMentsu, Machi.RYMH));
                 }
-                case PEN -> {
+                case PEN3 -> {
                     hasToitsu = false;
+                    Tile t0 = Tile.of(at, 0);
+                    Tile t1 = Tile.of(at, -1);
+                    Tile t2 = Tile.of(at, -2);
 
-                    switch (at.value){
-                        case 3 -> {
-                            subTile.remove(Tile.of(at, -2));
-                            subTile.remove(Tile.of(at, -1));
-                            subMentsu.add(new Shuntsu(new Tile[]{Tile.of(at, -2), Tile.of(at, -1), at}, agaru));
-                        }
-                        case 7 -> {
-                            subTile.remove(Tile.of(at, 1));
-                            subTile.remove(Tile.of(at, 2));
-                            subMentsu.add(new Shuntsu(new Tile[]{at, Tile.of(at, 1), Tile.of(at, 2)}, agaru));
-                        }
-                    }
-                    stack.push(new Triplet<>(subTile, subMentsu, Machi.PEN));
+                    subTile.remove(t1);
+                    subTile.remove(t2);
+                    subMentsu.add(new Shuntsu(new Tile[]{t2, t1, t0}, agaru));
+                    stack.push(new Triplet<>(subTile, subMentsu, Machi.PEN3));
+                }
+                case PEN7 -> {
+                    hasToitsu = false;
+                    Tile t0 = Tile.of(at, 0);
+                    Tile t1 = Tile.of(at, 1);
+                    Tile t2 = Tile.of(at, 2);
+
+                    subTile.remove(t1);
+                    subTile.remove(t2);
+                    subMentsu.add(new Shuntsu(new Tile[]{t0, t1, t2}, agaru));
+                    stack.push(new Triplet<>(subTile, subMentsu, Machi.PEN7));
                 }
                 case KAN -> {
                     hasToitsu = false;
+                    Tile t0 = Tile.of(at, 0);
+                    Tile t1 = Tile.of(at, 1);
+                    Tile t2 = Tile.of(at, -1);
 
-                    subTile.remove(Tile.of(at, -1));
-                    subTile.remove(Tile.of(at, 1));
-                    subMentsu.add(new Shuntsu(new Tile[]{Tile.of(at, -1), at, Tile.of(at, 1)}, agaru));
+                    subTile.remove(t1);
+                    subTile.remove(t2);
+                    subMentsu.add(new Shuntsu(new Tile[]{t2, t0, t1}, agaru));
                     stack.push(new Triplet<>(subTile, subMentsu, Machi.KAN));
                 }
                 case SHP -> {
                     hasToitsu = false;
+                    Tile t0 = Tile.of(at, 0);
 
-                    subTile.remove(at);
-                    subTile.remove(at);
-                    subMentsu.add(new Koutsu(new Tile[]{at, at, at}, agaru));
+                    subTile.remove(t0);
+                    subTile.remove(t0);
+                    subMentsu.add(new Koutsu(new Tile[]{t0, t0, t0}, agaru));
                     stack.push(new Triplet<>(subTile, subMentsu, Machi.SHP));
                 }
                 case TAN -> {
                     hasToitsu = true;
+                    Tile t0 = Tile.of(at, 0);
 
-                    subTile.remove(at);
-                    subMentsu.add(new Toitsu(new Tile[]{at, at}, agaru));
+                    subTile.remove(t0);
+                    subMentsu.add(new Toitsu(new Tile[]{t0, t0}, agaru));
                     stack.push(new Triplet<>(subTile, subMentsu, Machi.TAN));
                 }
                 case CHI -> {
@@ -153,7 +183,7 @@ public class Agari {
                     for (Tile c: chiitoi){
                         subMentsu.add(new Toitsu(new Tile[]{c, c}, agaru));
                     }
-                    out.add(new Agari(agaruTile, subMentsu, Machi.CHI, true, agaru));
+                    out.add(new Agari(agaruTile, subMentsu, Machi.CHI, true, agaru, aka));
                 }
                 case KMU -> {
                     subTile.add(agaruTile);
@@ -162,7 +192,7 @@ public class Agari {
                         subArray[i] = subTile.get(i);
                     }
                     subMentsu.add(new Kokushi(subArray));
-                    out.add(new Agari(agaruTile, subMentsu, Machi.KMU, true, agaru));
+                    out.add(new Agari(agaruTile, subMentsu, Machi.KMU, true, agaru, aka));
                 }
                 case KMU13 -> {
                     subTile.add(agaruTile);
@@ -171,7 +201,7 @@ public class Agari {
                         subArray[i] = subTile.get(i);
                     }
                     subMentsu.add(new Kokushi(subArray));
-                    out.add(new Agari(agaruTile, subMentsu, Machi.KMU13, true, agaru));
+                    out.add(new Agari(agaruTile, subMentsu, Machi.KMU13, true, agaru, aka));
                 }
             }
             if (!hasToitsu){
@@ -197,7 +227,7 @@ public class Agari {
             length = target.getValue1().size();
             if (length == 0){
                 Collections.sort(target.getValue2());
-                out.add(new Agari(agaruTile, target.getValue2(), target.getValue3(), menzen, agaru));
+                out.add(new Agari(agaruTile, target.getValue2(), target.getValue3(), menzen, agaru, aka));
             } else {
                 for (int i=0; i<length-2; i++){
                     if (target.getValue1().contains(Tile.of(target.getValue1().get(i), 1)) && target.getValue1().contains(Tile.of(target.getValue1().get(i), 2))){

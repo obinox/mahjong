@@ -1197,20 +1197,47 @@ public enum Yaku {
             yakuman.add(TSU);
         }
 
-
-
+        if (yakuman.isEmpty()){
+            return out;
+        } else {
+            return yakuman;
+        }
+    }
+    public static List<Yaku> stateYaku(int riichi, int when, boolean fuuro, AgaruTile agaruTile, Tile ji){
+        List<Yaku> out = new ArrayList<>();
+        List<Yaku> yakuman = new ArrayList<>();
         //RCH
         //DRI
+        switch (riichi){
+            case 1 -> out.add(RCH);
+            case 2 -> out.add(DRI);
+        }
+
         //IPP
+        if (!fuuro){
+            out.add(IPP);
+        }
+
         //RIN
         //HAI
         //HOU
         //CHK
-
-
+        switch (agaruTile){
+            case RINSHAN -> out.add(RIN);
+            case HAITAI -> out.add(HAI);
+            case HOUTAI -> out.add(HOU);
+            case CHANKAN -> out.add(CHK);
+        }
 
         //TEN
         //CHH
+        if (when==1 && !fuuro){
+            switch (ji) {
+                case EAST -> yakuman.add(TEN);
+                case SOUTH, WEST, NORTH -> yakuman.add(CHH);
+            }
+        }
+
         if (yakuman.isEmpty()){
             return out;
         } else {

@@ -34,12 +34,25 @@ public enum Machi {
      * <p>2 fu</p>
      * <h2>Waiting Type</h2>
      * <ul>
-     *     <li>Wait for 123 or 789 {@link obinox.com.Mentsu.Shuntsu shuntsu}'s 3 or 7 tile</li>
+     *     <li>Wait for 123{@link obinox.com.Mentsu.Shuntsu shuntsu}'s 3 tile</li>
      * </ul>
      *
      * @see obinox.com.Mentsu.Shuntsu
      */
-    PEN(2),
+    PEN3(2),
+
+    /**
+     * <h1>Penchan Machi(<i>PEN</i>)</h1>
+     * <h2>Value</h2>
+     * <p>2 fu</p>
+     * <h2>Waiting Type</h2>
+     * <ul>
+     *     <li>Wait for 789 {@link obinox.com.Mentsu.Shuntsu shuntsu}'s 7 tile</li>
+     * </ul>
+     *
+     * @see obinox.com.Mentsu.Shuntsu
+     */
+    PEN7(2),
 
     /**
      * <h1>Kanchan Machi(<i>KAN</i>)</h1>
