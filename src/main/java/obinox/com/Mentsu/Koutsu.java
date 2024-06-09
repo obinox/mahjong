@@ -10,10 +10,11 @@ public class Koutsu extends Mentsu {
         this.tsu = MentsuType.ANKOU;
     }
 
-    public Koutsu(Toitsu toi, Tile tile, Tile from) {
-        super(toi, tile, from);
+    public Koutsu(Tile[] tiles, int from) {
+        super(tiles, from);
         this.tsu = MentsuType.MINKOU;
     }
+
 
     public Koutsu(Tile[] tiles, Agaru agaru){
         super(tiles);

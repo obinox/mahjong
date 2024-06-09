@@ -97,7 +97,7 @@ public class Yama {
         return this.haiYama.remove(i-1);
     }
 
-    public final Tile Rinshan(){
+    public final Tile rinshan(){
         this.haiteiIdx++;
         return this.rinshanpai.remove(0);
     }

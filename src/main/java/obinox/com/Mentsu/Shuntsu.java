@@ -10,7 +10,12 @@ public class Shuntsu extends Mentsu {
         this.tsu = MentsuType.ANJUN;
     }
 
-    public Shuntsu(Taatsu taa, Tile tile, int fuuro, Tile from) {
+    public Shuntsu(Tile[] tiles, int from) {
+        super(tiles, from);
+        this.tsu = MentsuType.MINJUN;
+    }
+
+    public Shuntsu(Taatsu taa, Tile tile, int fuuro, int from) {
         super(taa, tile, fuuro, from);
         this.tsu = MentsuType.MINJUN;
     }

@@ -93,15 +93,15 @@ public class Main {
 //                Tile.SOU1,Tile.SOU2,Tile.SOU3,
 //                Tile.SOU1,Tile.SOU2,
 //        };
-        System.out.println(getTenpai(Arrays.asList(tiles)).toString());
-//        List<Mentsu> f = new ArrayList<>();
-//        Mentsu m = new Shuntsu(new Tile[]{Tile.MAN6, Tile.MAN7, Tile.MAN8});
-//        f.add(m);
-        List<Agari> a = Agari.getAgari(Arrays.asList(tiles), new ArrayList<>(), Tile.MAN0, Agaru.TSUMO);
-        System.out.println(a);
-        System.out.println(getYaku(a.get(0), Tile.EAST, Tile.EAST));
+//        System.out.println(getTenpai(Arrays.asList(tiles)).toString());
+////        List<Mentsu> f = new ArrayList<>();
+////        Mentsu m = new Shuntsu(new Tile[]{Tile.MAN6, Tile.MAN7, Tile.MAN8});
+////        f.add(m);
+//        List<Agari> a = Agari.getAgari(Arrays.asList(tiles), new ArrayList<>(), Tile.MAN0, Agaru.TSUMO);
+//        System.out.println(a);
+//        System.out.println(getYaku(a.get(0), Tile.EAST, Tile.EAST));
 
-//        game();
+        game();
 
     }
 
@@ -111,7 +111,7 @@ public class Main {
         Tile ba = Tile.EAST;
         int kyoku = 0;
         int honba = 0;
-        int jun = 1;
+        int[] jun = {0,0,0,0};
 
         Scanner scn = new Scanner(System.in);
 
@@ -142,15 +142,19 @@ public class Main {
 
         // Oya tsumo
         int turn = 0;
+        Tile giri;
         // Start game
         while (true||!yama.isYamaEnd()){
             try {
+                System.out.println(hands[turn]);
                 hands[turn].tsumo(yama);
-                hands[turn].suteru(0);
+                giri = hands[turn].suteru(scn.nextInt());
+                System.out.println(hands[turn]);
+
             } catch (MahjongException e) {
                 System.out.println(e.getMessage());
             }
-            scn.next();
+//            scn.next();
             turn=(turn+1)%4;
         }
     }

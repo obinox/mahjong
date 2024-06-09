@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public abstract class Mentsu implements Comparable<Mentsu>{
     public final Tile[] tiles;
-    public final Tile from;
+    public final int from;
     public final int fuuroIdx;
     public MentsuType tsu;
 
@@ -57,17 +57,23 @@ public abstract class Mentsu implements Comparable<Mentsu>{
 
     public Mentsu(Tile[] tiles) {
         this.tiles = tiles;
-        this.from = Tile.NULL;
+        this.from = -1;
         this.fuuroIdx = -1;
     }
 
-    public Mentsu(Tile[] tiles, Tile from) {
+    public Mentsu(Tile[] tiles, int from) {
         this.tiles = tiles;
         this.from = from;
         this.fuuroIdx = 0;
     }
 
-    public Mentsu(Taatsu taa, Tile tile, int fuuro, Tile from) {
+    public Mentsu(Tile[] tiles, int from, int fuuroIdx) {
+        this.tiles = tiles;
+        this.from = from;
+        this.fuuroIdx = fuuroIdx;
+    }
+
+    public Mentsu(Taatsu taa, Tile tile, int fuuro, int from) {
         Tile[] tiles = new Tile[]{tile, taa.tiles[0], taa.tiles[1]};
         Arrays.sort(tiles);
         this.tiles = tiles;
@@ -75,13 +81,13 @@ public abstract class Mentsu implements Comparable<Mentsu>{
         this.fuuroIdx = fuuro;
     }
 
-    public Mentsu(Toitsu toi, Tile tile, Tile from) {
+    public Mentsu(Toitsu toi, Tile tile, int from) {
         this.tiles = new Tile[]{tile, toi.tiles[0], toi.tiles[1]};
         this.from = from;
         this.fuuroIdx = 0;
     }
 
-    public Mentsu(Koutsu kou, Tile tile, Tile from) {
+    public Mentsu(Koutsu kou, Tile tile, int from) {
         this.tiles = new Tile[]{kou.tiles[0], kou.tiles[1], kou.tiles[2], tile};
         this.from = from;
         this.fuuroIdx = 0;
