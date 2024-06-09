@@ -70,7 +70,6 @@ public class Hand {
         }
         Collections.sort(this.tiles);
         this.tsumohai = null;
-        this.kawa.add(t);
         return t;
     }
 
@@ -152,7 +151,22 @@ public class Hand {
     }
 
     public boolean canRiichi(){
-        return menzen && !Tenpai.getTenpai(tiles).isEmpty();
+        List<Tile> riichigiri = new ArrayList<>();
+        if (!menzen){
+            return false;
+        }
+        if (!Tenpai.getTenpai(tiles).isEmpty()){
+            riichigiri.add(tsumohai);
+        }
+        for (int i=0;i<tiles.size();i++){
+            List<Tile> sub = new ArrayList<>(List.copyOf(tiles));
+            sub.add(tsumohai);
+            sub.remove(i);
+            if (!Tenpai.getTenpai(sub).isEmpty()){
+                riichigiri.add(tsumohai);
+            }
+        }
+        return !riichigiri.isEmpty();
     }
 
     public void pong(Tile tile, int from){
@@ -315,5 +329,9 @@ public class Hand {
     }
     public boolean canRyukyoku(){
         return false;
+    }
+
+    public void tsumohou() {
+
     }
 }
