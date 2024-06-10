@@ -101,4 +101,8 @@ public class Yama {
         this.haiteiIdx++;
         return this.rinshanpai.remove(0);
     }
+
+    public int getHaiteiIdx() {
+        return haiteiIdx;
+    }
 }

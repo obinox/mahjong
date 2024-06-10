@@ -16,9 +16,9 @@ public class Server {
 
     private static final int PORT = 8080;
     private static final int MAX_PLAYERS = 4;
-    private static Map<String, PrintWriter> clients = new HashMap<>();
-    private static Map<String, Player> players = new HashMap<>();
-    private static BlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
+    private static final Map<String, PrintWriter> clients = new HashMap<>();
+    private static final Map<String, Player> players = new HashMap<>();
+    private static final BlockingQueue<String> messageQueue = new LinkedBlockingQueue<>();
 
     private static int clientCount = 0;
     private static int currentPlayerIndex = 0;
@@ -58,8 +58,8 @@ public class Server {
 
     // Client handler thread
     static class ClientHandler implements Runnable {
-        private Socket clientSocket;
-        private String clientID;
+        private final Socket clientSocket;
+        private final String clientID;
 
         public ClientHandler(Socket clientSocket, String clientID) {
             this.clientSocket = clientSocket;
@@ -154,24 +154,52 @@ public class Server {
                 Tile tsumo = null;
                 List<MyTurnAction> myTurnActions = new ArrayList<>();
                 while (gameRunning) {
+
                     for (int i=0;i<4;i++){
                         StringBuilder s = new StringBuilder();
                         for (Tile t: hands[i].getTiles()){
                             s.append(t.str);
                         }
                         clientPrints.get(i).println("===hand:"+s);
+                        for (int j=i;j<i+4;j++){
+                            StringBuilder sb = new StringBuilder();
+                            for (Tile t: hands[j%4].kawa){
+                                sb.append(t.str);
+                            }
+                            if (j == currentPlayerIndex && giri != null){
+                                sb.append(giri.str);
+                            }
+                            clientPrints.get(i).println("===kawa"+(j-i+4)%4+":"+sb);
+                        }
+                        StringBuilder ss = new StringBuilder();
+                        for (int j=0;j<5;j++){
+                            if (j<=yama.getHaiteiIdx()){
+                                ss.append(yama.dorahyoujihai.get(j).str);
+                            } else {
+                                ss.append("0b");
+                            }
+                        }
+                        clientPrints.get(i).println("===dora:"+ss);
                     }
                     try {
                         System.out.println(Arrays.toString(jun));
                         switch (doType) {
                             case 0 -> {
-                                tsumo = yama.tsumo();
-                                jun[currentPlayerIndex]++;
-                                hands[currentPlayerIndex].tsumo(tsumo);
-                                clientPrints.get(currentPlayerIndex).println("===tsumo:"+tsumo.str);
-                                clientPrints.get(currentPlayerIndex).println("===input:"+0);
+                                if (yama.isYamaEnd()){
+                                    for (int i=0;i<4;i++){
+                                        clientPrints.get(i).println("===gameend:");
+                                    }
+                                } else {
+                                    tsumo = yama.tsumo();
+                                    jun[currentPlayerIndex]++;
+                                    hands[currentPlayerIndex].tsumo(tsumo);
+                                    if (tsumo != null){
+                                        clientPrints.get(currentPlayerIndex).println("===tsumo:"+tsumo.str);
+                                        clientPrints.get(currentPlayerIndex).println("===input:"+0);
+                                    }
 
-                                doType = 1;
+                                    doType = 1;
+                                }
                             }
                             case 1 -> {
                                 if (hands[currentPlayerIndex].canRiichi()) {
@@ -436,6 +464,7 @@ public class Server {
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
+
                     }
                 }
 
@@ -444,7 +473,7 @@ public class Server {
     }
     // Player class
     static class Player {
-        private String id;
+        private final String id;
 
         public Player(String id) {
             this.id = id;

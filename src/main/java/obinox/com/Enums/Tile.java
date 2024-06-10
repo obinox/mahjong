@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 public enum Tile{
     //Padding
-    PAD(0, Group.NULL, "pd", 0),
+    PAD(0, Group.NULL, "0b", 0),
 
     //ManZu
     MAN1(1, Group.MAN, "1m",  4),
@@ -60,7 +60,7 @@ public enum Tile{
     //AkaDora
 
     //Null
-    NULL(0, Group.NULL, "nl", 0),
+    NULL(0, Group.NULL, "0b", 0),
 
     ;
 
